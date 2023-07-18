@@ -1,0 +1,1070 @@
+@import "../shared/styles/base-theme.scss";
+
+* {
+    font-family: -apple-system,
+        BlinkMacSystemFont,
+        "Segoe UI",
+        Helvetica,
+        Arial,
+        sans-serif,
+        "Apple Color Emoji",
+        "Segoe UI Emoji",
+        "Segoe UI Symbol";
+    border-color: $--light-talk-colors-borderColor;
+}
+
+* {
+    &::-webkit-scrollbar {
+        width: 10px;
+        height: 10px;
+        background-color: transparent;
+    }
+
+    &::-webkit-scrollbar-track {
+        background-color: transparent;
+    }
+
+    &::-webkit-scrollbar-thumb {
+        background-color: transparent;
+        border-radius: 50px;
+    }
+
+    &:hover {
+        &::-webkit-scrollbar-track {
+            background-color: #f5f5f5;
+        }
+
+        &::-webkit-scrollbar-thumb {
+            background-color: #c7c7c7;
+
+            &:hover {
+                background-color: #a0a0a0;
+            }
+        }
+    }
+}
+
+// Define Spinner styles
+.--light-talk__spinner {
+    position: relative;
+    width: 16px;
+    height: 16px;
+    display: inline-block;
+    padding: 10px;
+    border-radius: 10px;
+
+    &__bar {
+        width: 6%;
+        height: 16%;
+        background: $--light-talk-colors-gray-400;
+        position: absolute;
+        left: 49%;
+        top: 43%;
+        opacity: 0;
+        border-radius: 50px;
+        box-shadow: 0 0 3px rgba(0, 0, 0, 0.2);
+        animation: fade 1s linear infinite;
+    }
+
+    &__bar1 {
+        transform: rotate(0deg) translate(0, -130%);
+        animation-delay: 0s;
+    }
+
+    &__bar2 {
+        transform: rotate(30deg) translate(0, -130%);
+        animation-delay: -0.9167s;
+    }
+
+    &__bar3 {
+        transform: rotate(60deg) translate(0, -130%);
+        animation-delay: -0.833s;
+    }
+
+    &__bar4 {
+        transform: rotate(90deg) translate(0, -130%);
+        animation-delay: -0.7497s;
+    }
+
+    &__bar5 {
+        transform: rotate(120deg) translate(0, -130%);
+        animation-delay: -0.667s;
+    }
+
+    &__bar6 {
+        transform: rotate(150deg) translate(0, -130%);
+        animation-delay: -0.5837s;
+    }
+
+    &__bar7 {
+        transform: rotate(180deg) translate(0, -130%);
+        animation-delay: -0.5s;
+    }
+
+    &__bar8 {
+        transform: rotate(210deg) translate(0, -130%);
+        animation-delay: -0.4167s;
+    }
+
+    &__bar9 {
+        transform: rotate(240deg) translate(0, -130%);
+        animation-delay: -0.333s;
+    }
+
+    &__bar10 {
+        transform: rotate(270deg) translate(0, -130%);
+        animation-delay: -0.2497s;
+    }
+
+    &__bar11 {
+        transform: rotate(300deg) translate(0, -130%);
+        animation-delay: -0.167s;
+    }
+
+    &__bar12 {
+        transform: rotate(330deg) translate(0, -130%);
+        animation-delay: -0.0833s;
+    }
+}
+
+@keyframes fade {
+    from {
+        opacity: 1;
+    }
+
+    to {
+        opacity: 0.25;
+    }
+}
+
+// Define icon button styles
+.--light-talk__icon-button {
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: $--light-talk-space-2;
+    border-radius: 50%;
+    font-size: $--light-talk-fontSizes-md;
+    line-height: 1.2;
+    text-align: center;
+    text-decoration: none;
+    color: $--light-talk-colors-gray-700;
+    background-color: $--light-talk-colors-gray-100;
+    border: $--light-talk-borders-2px;
+    border-color: $--light-talk-colors-borderColor !important;
+    transition: all 0.2s ease-in-out;
+    box-shadow: $--light-talk-shadows-md;
+    user-select: none;
+    white-space: nowrap;
+
+    &:hover,
+    &:focus {
+        background-color: $--light-talk-colors-gray-500;
+        outline: none;
+        box-shadow: $--light-talk-shadows-md;
+    }
+
+    &:active {
+        background-color: $--light-talk-colors-gray-300;
+    }
+
+    &:disabled {
+        opacity: 0.5;
+        pointer-events: none;
+    }
+}
+
+.--light-talk__floating-button {
+    position: fixed;
+    bottom: 16px;
+    right: 20px;
+    height: 48px;
+    width: 48px;
+    z-index: $--light-talk-zIndices-front;
+    background-color: $--light-talk-colors-whiteAlpha-700;
+
+    >svg {
+        width: 24px;
+        height: 24px;
+        fill: currentColor;
+    }
+
+    &:hover,
+    &:focus {
+        background-color: $--light-talk-colors-gray-100;
+        outline: none;
+        box-shadow: $--light-talk-shadows-md;
+    }
+}
+
+// Define input group styles
+.--light-talk__input-group {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+
+    &__container {
+        width: 100%;
+        display: flex;
+        position: relative;
+        isolation: isolate;
+        align-items: flex-end;
+    }
+
+    &__addon-left,
+    &__addon-right {
+        display: flex;
+        align-items: center;
+        padding: calc(0.375 * $--light-talk-shadow-root-font-size) calc(0.75 * $--light-talk-shadow-root-font-size);
+        background-color: #f8f9fa;
+        border: 1px solid #ced4da;
+    }
+
+    &__addon-left {
+        border-right: 0;
+    }
+
+    &__addon-right {
+        font-size: $--light-talk-fontSizes-md;
+        padding-inline-start: calc(1 * $--light-talk-shadow-root-font-size);
+        padding-inline-end: $--light-talk-space-4;
+        border-width: 1px;
+        border-style: solid;
+        border-image: initial;
+        border-color: $--light-talk-colors-borderColor !important;
+        background: $--light-talk-colors-gray-100;
+        margin-inline-start: -1px;
+        border-inline-start-color: $--light-talk-colors-transparent;
+        flex: 0 0 auto;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        white-space: nowrap;
+        border-radius: 0px 25px 25px 0px;
+        cursor: pointer;
+        height: 48px;
+        min-height: 48px;
+        max-height: 48px;
+        transition: background-color 0.3s;
+        color: $--light-talk-colors-gray-700;
+
+        &:hover {
+            background-color: $--light-talk-colors-gray-300;
+        }
+
+        &:disabled {
+            background: $--light-talk-colors-blackAlpha-100;
+            color: $--light-talk-colors-gray-400;
+            -webkit-user-select: none;
+            /* Safari */
+            -ms-user-select: none;
+            /* IE 10 and IE 11 */
+            user-select: none;
+        }
+
+        >svg {
+            fill: currentColor;
+        }
+    }
+
+    &__input {
+        width: 100%;
+        min-height: 42px;
+        outline: transparent solid 2px;
+        position: relative;
+        appearance: none;
+        transition-property: $--light-talk-transition-property-common;
+        transition-duration: $--light-talk-transition-duration-normal;
+        padding-top: 2px;
+        padding-bottom: 2px;
+        padding-inline-start: $--light-talk-space-4;
+        padding-inline-end: $--light-talk-space-4;
+        border-width: 1px;
+        border-style: solid;
+        border-image: initial;
+        border-color: $--light-talk-colors-borderColor !important;
+        background: $--light-talk-colors-white;
+        border-radius: 25px 0px 0px 25px;
+        display: inline-flex;
+        align-items: center;
+
+        &:focus {
+            border-color: #80bdff;
+            box-shadow: 0 0 0 calc(0.2 * $--light-talk-shadow-root-font-size) rgba(0, 123, 255, 0.25);
+        }
+
+        &_disabled {
+            border-radius: 25px;
+            border-color: $--light-talk-colors-borderColor !important;
+            background: $--light-talk-colors-blackAlpha-100;
+            color: $--light-talk-colors-gray-400;
+            width: 100%;
+            min-height: 42px;
+            outline: transparent solid 2px;
+            position: relative;
+            appearance: none;
+            transition-property: $--light-talk-transition-property-common;
+            transition-duration: $--light-talk-transition-duration-normal;
+            padding-top: 2px;
+            padding-bottom: 2px;
+            padding-inline-start: $--light-talk-space-4;
+            padding-inline-end: $--light-talk-space-4;
+            border-width: 1px;
+            border-style: solid;
+            border-image: initial;
+            display: inline-flex;
+            align-items: center;
+            -webkit-user-select: none;
+            /* Safari */
+            -ms-user-select: none;
+            /* IE 10 and IE 11 */
+            user-select: none;
+        }
+    }
+
+    &__textarea {
+        width: 100%;
+        height: 24px;
+        min-height: 24px;
+        outline: transparent solid 2px;
+        position: relative;
+        appearance: none;
+        transition-property: $--light-talk-transition-property-common;
+        transition-duration: $--light-talk-transition-duration-normal;
+        font-family: $--light-talk-fonts-body;
+        font-size: $--light-talk-fontSizes-md;
+        border: none;
+        background: $--light-talk-colors-white;
+        color: $--light-talk-colors-gray-700;
+        resize: none;
+
+        &:focus {
+            border: none;
+            outline: none;
+        }
+    }
+}
+
+// Define popover styles
+.--light-talk__popover {
+    &__container {
+        visibility: hidden;
+        z-index: $--light-talk-zIndices-front;
+
+        &[data-show="true"] {
+            visibility: visible;
+        }
+
+        // Defined Arrow position styles
+        &[data-popper-placement="top"] {
+            >.--light-talk__popover__arrow {
+                bottom: 0px;
+            }
+        }
+
+        &[data-popper-placement="bottom"] {
+            >.--light-talk__popover__arrow {
+                top: -4px;
+            }
+        }
+
+        &[data-popper-placement="left"] {
+            >.--light-talk__popover__arrow {
+                right: -4px;
+            }
+        }
+
+        &[data-popper-placement="right"] {
+            >.--light-talk__popover__arrow {
+                left: -4px;
+            }
+        }
+
+        &__arrow[data-hide="true"] {
+            &::before {
+                visibility: hidden !important;
+            }
+        }
+
+        &[data-show] {
+            >.--light-talk__popover__arrow::before {
+                visibility: visible;
+            }
+        }
+    }
+
+    // Defined Arrow styles
+    &__arrow,
+    &__arrow::before {
+        position: absolute;
+        width: 8px;
+        height: 8px;
+        background: $--light-talk-colors-white;
+        transition: top 0.3s ease-in, bottom 0.3s ease-in, left 0.3s ease-in,
+            right 0.3s ease-in;
+    }
+
+    &__arrow {
+        visibility: hidden;
+    }
+
+    &__arrow::before {
+        visibility: hidden;
+        content: "";
+        transform: rotate(45deg);
+        border-right: 1.5px solid $--light-talk-colors-borderColor;
+        border-bottom: 1.5px solid $--light-talk-colors-borderColor;
+        box-shadow: 2px 4px 6px -1px rgba(0, 0, 0, 0.1);
+    }
+
+    // Defined Content styles
+    &__content {
+        background-color: $--light-talk-color-chat-conversation-background;
+        width: $--light-talk-sizes-md;
+        border-width: 1px;
+        border-style: solid;
+        border-color: $--light-talk-colors-borderColor !important;
+        border-radius: $--light-talk-radii-md;
+        box-shadow: $--light-talk-shadows-sm;
+        margin-inline-start: $--light-talk-space-4;
+        margin-inline-end: $--light-talk-space-4;
+        margin-top: $--light-talk-space-1;
+        margin-bottom: $--light-talk-space-1;
+        max-height: 90vh;
+        overflow: hidden;
+        box-shadow: $--light-talk-shadows-md;
+        transition-property: $--light-talk-transition-property-common;
+        transition-duration: $--light-talk-transition-duration-normal;
+    }
+
+    // Defined header styles
+    &__header {
+        position: relative;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding-inline-start: $--light-talk-space-3;
+        padding-inline-end: $--light-talk-space-3;
+        padding-top: $--light-talk-space-2;
+        padding-bottom: $--light-talk-space-2;
+        border-bottom-width: 1px;
+        border-bottom-style: solid;
+        border-color: $--light-talk-colors-borderColor !important;
+        font-weight: $--light-talk-fontWeights-semibold;
+        color: $--light-talk-colors-gray-700;
+        position: sticky;
+        top: 0;
+        background-color: $--light-talk-colors-white;
+        z-index: $--light-talk-zIndices-front;
+
+        &-content {
+            width: 100%;
+
+            &__title-container {
+                display: inline-flex;
+                align-items: center;
+                gap: 4px;
+            }
+
+            &__title {
+                margin: 0;
+                font-size: $--light-talk-fontSizes-md;
+                font-weight: $--light-talk-fontWeights-bold;
+                padding-top: $--light-talk-space-1;
+                padding-bottom: $--light-talk-space-1;
+            }
+
+            &__subtitle {
+                margin: 0;
+                font-size: $--light-talk-fontSizes-sm;
+                font-weight: $--light-talk-fontWeights-normal;
+                color: $--light-talk-colors-gray-500;
+                display: -webkit-box;
+                -webkit-box-orient: vertical;
+                -webkit-line-clamp: 2;
+                overflow: hidden;
+            }
+        }
+    }
+
+    &__action-button {
+        outline: transparent solid 2px;
+        outline-offset: 2px;
+        display: flex;
+        -webkit-box-align: center;
+        align-items: center;
+        -webkit-box-pack: center;
+        justify-content: center;
+        flex-shrink: 0;
+        border-width: 0;
+        border-radius: $--light-talk-radii-md;
+        transition-property: $--light-talk-transition-property-common;
+        transition-duration: $--light-talk-transition-duration-normal;
+        background: var(--close-button-bg);
+        --close-button-size: $--light-talk-sizes-6;
+        font-size: $--light-talk-fontSizes-2xs;
+        padding: $--light-talk-space-2;
+        color: $--light-talk-colors-gray-400;
+
+        &__close {
+            position: absolute;
+            top: $--light-talk-space-1;
+            right: $--light-talk-space-2;
+        }
+
+        &__expand {
+            position: absolute;
+            top: $--light-talk-space-1;
+            right: 42px;
+        }
+
+        &__clear {
+            position: absolute;
+            top: $--light-talk-space-1;
+            right: 76px;
+        }
+
+        &:hover {
+            color: $--light-talk-colors-gray-500;
+            background-color: $--light-talk-colors-blackAlpha-100;
+        }
+
+        >svg {
+            width: 16px;
+            height: 16px;
+            fill: currentColor;
+        }
+    }
+
+    // Defined body styles
+    &__body {
+        color: $--light-talk-colors-gray-700;
+        padding-inline-start: $--light-talk-space-3;
+        padding-inline-end: $--light-talk-space-3;
+        padding-top: $--light-talk-space-2;
+        padding-bottom: $--light-talk-space-2;
+        border-bottom-width: 1px;
+        border-bottom-style: solid;
+        border-color: $--light-talk-colors-borderColor !important;
+        font-size: $--light-talk-fontSizes-sm;
+        font-weight: $--light-talk-fontWeights-normal;
+        max-height: 60vh;
+        max-width: $--light-talk-sizes-md;
+        overflow: auto;
+        transition-property: $--light-talk-transition-property-common;
+        transition-duration: $--light-talk-transition-duration-normal;
+
+        &__toolbar {
+            &__container {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+            }
+
+            &__options {
+                width: 100%;
+                display: flex;
+                justify-content: flex-end;
+                gap: $--light-talk-space-1;
+
+                &__button {
+                    padding: $--light-talk-space-2;
+                    display: flex;
+                    -webkit-box-align: center;
+                    align-items: center;
+                    -webkit-box-pack: center;
+                    justify-content: center;
+                    border-width: 1px;
+                    border-style: solid;
+                    border-radius: 50%;
+                    transition-property: $--light-talk-transition-property-common;
+                    transition-duration: $--light-talk-transition-duration-normal;
+                    font-size: $--light-talk-fontSizes-2xs;
+                    background-color: $--light-talk-colors-white;
+                    border-color: $--light-talk-colors-borderColor !important;
+                    cursor: pointer;
+                    color: $--light-talk-colors-gray-400;
+
+                    &:hover {
+                        color: $--light-talk-colors-gray-500;
+                        background-color: $--light-talk-colors-blackAlpha-100;
+                    }
+
+                    >svg {
+                        width: 16px;
+                        height: 16px;
+                        fill: currentColor;
+                    }
+                }
+            }
+
+            &__chat-button {
+                min-width: 100px;
+                padding-top: 0;
+                padding-bottom: 0;
+                padding-right: $--light-talk-space-2;
+                padding-left: $--light-talk-space-2;
+                display: inline-flex;
+                gap: $--light-talk-space-2;
+                -webkit-box-align: center;
+                align-items: center;
+                -webkit-box-pack: center;
+                justify-content: center;
+                border-width: 1px;
+                border-style: solid;
+                border-radius: 25px;
+                transition-property: $--light-talk-transition-property-common;
+                transition-duration: $--light-talk-transition-duration-normal;
+                font-size: $--light-talk-fontSizes-2xs;
+                font-weight: $--light-talk-fontWeights-bold;
+                background-color: $--light-talk-colors-white;
+                border-color: $--light-talk-colors-brand-600;
+                cursor: pointer;
+                color: $--light-talk-colors-brand-600;
+
+                &:hover {
+                    color: $--light-talk-colors-brand-900;
+                    background-color: $--light-talk-colors-brand-100;
+                }
+
+                >svg {
+                    width: 16px;
+                    height: 16px;
+                    fill: currentColor;
+                }
+            }
+
+            &__stop-generating_button {
+                color: $--light-talk-colors-gray-700;
+                background-color: $--light-talk-colors-white;
+                border-radius: 4px;
+                border-width: 1px;
+                border-style: solid;
+                border-color: $--light-talk-colors-borderColor !important;
+                padding: 10px 20px;
+                font-size: $--light-talk-fontSizes-sm;
+                cursor: pointer;
+                transition: background-color 0.3s;
+                display: flex;
+                align-items: center;
+
+                &:hover {
+                    background-color: $--light-talk-colors-blackAlpha-100;
+                }
+            }
+        }
+    }
+
+    // Defined footer style
+    &__footer {
+        padding-inline-start: $--light-talk-space-3;
+        padding-inline-end: $--light-talk-space-3;
+        padding-top: $--light-talk-space-2;
+        padding-bottom: $--light-talk-space-2;
+        display: flex;
+        justify-content: flex-end;
+        position: sticky;
+        border-bottom: 0;
+        background-color: $--light-talk-colors-white;
+    }
+}
+
+// Defined completion styles
+.--light-talk__completion {
+    &__container {
+        border-radius: 10px;
+    }
+
+    &__chat-message {
+        background-color: $--light-talk-colors-white;
+        border: 1px solid;
+        border-color: $--light-talk-colors-borderColor !important;
+        padding: 8px 12px;
+    }
+
+    &__user-message {
+        text-align: right;
+        max-width: 90%;
+        margin-left: auto;
+        color: $--light-talk-colors-gray-500;
+        word-wrap: break-word;
+    }
+}
+
+// Defined alert styles
+.--light-talk__alert {
+    display: flex;
+    align-items: center;
+    border-radius: 4px;
+    padding: 0.5rem 1rem;
+    font-weight: 600;
+
+    &__status {
+        background-color: $--light-talk-colors-red-100;
+        color: $--light-talk-colors-red-500;
+        border: 0;
+    }
+
+    &__icon {
+        display: inline-block;
+        width: 20px;
+        height: 20px;
+        margin-right: 0.5rem;
+
+        >svg {
+            width: 20px;
+            height: 20px;
+            fill: currentColor;
+        }
+    }
+
+    &__message {
+        flex: 1;
+        word-wrap: break-word;
+        color: $--light-talk-colors-gray-700;
+    }
+}
+
+.--light-talk__welcome-message {
+    &__container {
+        box-sizing: border-box;
+
+        /* Auto layout */
+
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        padding: 16px 32px;
+        gap: 8px;
+
+        background: #F9FBFF;
+        border-bottom: 1px solid #E2E8F0;
+
+        /* Inside auto layout */
+
+        flex: none;
+        order: 0;
+        align-self: stretch;
+        flex-grow: 0;
+    }
+
+    &__icon {
+        width: 40px;
+        height: 35.56px;
+
+        /* Inside auto layout */
+
+        flex: none;
+        order: 0;
+        flex-grow: 0;
+
+        animation: jump 1.5s infinite;
+
+        >svg {
+            width: 40px;
+            height: 35.56px;
+            fill: currentColor;
+        }
+    }
+
+    &__content {
+        font-family: 'Inter';
+        font-style: normal;
+        font-weight: 700;
+        font-size: 12px;
+        line-height: 18px;
+        /* or 150% */
+
+        display: flex;
+        align-items: center;
+        text-align: center;
+        flex-direction: column;
+
+        color: $--light-talk-colors-gray-500;
+
+
+        /* Inside auto layout */
+
+        flex: none;
+        order: 1;
+        align-self: stretch;
+        flex-grow: 0;
+
+        &__title {
+            font-size: large;
+            color: $--light-talk-colors-gray-700;
+            margin-top: 0;
+        }
+    }
+
+    &__action-container {
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+        padding: 0px;
+        gap: 16px;
+
+        /* Inside auto layout */
+
+        flex: none;
+        order: 2;
+        flex-grow: 0;
+    }
+
+    &__button {
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+        padding: 8px 12px;
+        gap: 6px;
+
+        width: 141px;
+
+        border-color: transparent;
+        border-radius: 6px;
+        background: $--light-talk-colors-brand-600;
+        color: $--light-talk-colors-white;
+        cursor: pointer;
+        text-decoration: none;
+
+        &:hover {
+            background-color: $--light-talk-colors-brand-900;
+        }
+
+    }
+}
+
+@keyframes jump {
+    0% {
+        transform: translateY(4px);
+    }
+
+    50% {
+        transform: translateY(-8px);
+    }
+
+    100% {
+        transform: translateY(4px);
+    }
+}
+
+/* --light-talk__react-markdown GitHub Light Theme */
+.--light-talk__react-markdown {
+    font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Helvetica, Arial, sans-serif, Apple Color Emoji, Segoe UI Emoji;
+    font-size: 16px;
+    line-height: 1.5;
+    color: #24292e;
+    word-wrap: break-word;
+}
+
+.--light-talk__react-markdown h1,
+.--light-talk__react-markdown h2,
+.--light-talk__react-markdown h3,
+.--light-talk__react-markdown h4,
+.--light-talk__react-markdown h5,
+.--light-talk__react-markdown h6 {
+    margin-top: 24px;
+    margin-bottom: 16px;
+    font-weight: 600;
+    line-height: 1.25;
+}
+
+.--light-talk__react-markdown h1 {
+    font-size: 2em;
+}
+
+.--light-talk__react-markdown h2 {
+    font-size: 1.5em;
+}
+
+.--light-talk__react-markdown h3 {
+    font-size: 1.25em;
+}
+
+.--light-talk__react-markdown h4 {
+    font-size: 1em;
+}
+
+.--light-talk__react-markdown h5 {
+    font-size: 0.875em;
+}
+
+.--light-talk__react-markdown h6 {
+    font-size: 0.85em;
+    color: #586069;
+}
+
+.--light-talk__react-markdown a {
+    color: #0366d6;
+    text-decoration: none;
+}
+
+.--light-talk__react-markdown a:hover {
+    text-decoration: underline;
+}
+
+.--light-talk__react-markdown code {
+    padding: 0.2em 0.4em;
+    margin: 0;
+    font-size: 85%;
+    background-color: rgba(27, 31, 35, 0.05);
+    border-radius: 3px;
+}
+
+.--light-talk__react-markdown pre {
+    padding: 16px;
+    overflow: auto;
+    font-size: 85%;
+    line-height: 1.45;
+    background-color: #f6f8fa;
+    border-radius: 3px;
+}
+
+.--light-talk__react-markdown pre code {
+    padding: 0;
+    margin: 0;
+    font-size: 100%;
+    word-break: normal;
+    white-space: pre;
+    background: transparent;
+    border: 0;
+}
+
+/* Basic code syntax highlighting */
+.--light-talk__react-markdown pre code {
+    color: #24292e;
+}
+
+/* Comments */
+.--light-talk__react-markdown pre code span.hljs-comment {
+    color: #6a737d;
+    font-style: italic;
+}
+
+/* Keywords */
+.--light-talk__react-markdown pre code span.hljs-keyword {
+    color: #d73a49;
+    font-weight: bold;
+}
+
+/* Strings */
+.--light-talk__react-markdown pre code span.hljs-string {
+    color: #032f62;
+}
+
+/* Numbers */
+.--light-talk__react-markdown pre code span.hljs-number {
+    color: #a963ff;
+}
+
+/* Functions */
+.--light-talk__react-markdown pre code span.hljs-function {
+    color: #6f42c1;
+}
+
+/* Variables */
+.--light-talk__react-markdown pre code span.hljs-variable {
+    color: #005cc5;
+}
+
+/* Constants */
+.--light-talk__react-markdown pre code span.hljs-constant {
+    color: #005cc5;
+}
+
+/* Types */
+.--light-talk__react-markdown pre code span.hljs-type {
+    color: #d73a49;
+}
+
+/* Punctuation */
+.--light-talk__react-markdown pre code span.hljs-punctuation {
+    color: #24292e;
+}
+
+.--light-talk__react-markdown blockquote {
+    margin: 0;
+    padding: 0 1em;
+    color: #6a737d;
+    border-left: 0.25em solid #dfe2e5;
+}
+
+.--light-talk__react-markdown ul,
+.--light-talk__react-markdown ol {
+    padding-left: 2em;
+}
+
+.--light-talk__react-markdown ul ul,
+.--light-talk__react-markdown ul ol,
+.--light-talk__react-markdown ol ul,
+.--light-talk__react-markdown ol ol {
+    margin-top: 0;
+    margin-bottom: 0;
+}
+
+.--light-talk__react-markdown img {
+    max-width: 100%;
+    box-sizing: content-box;
+    background-color: #fff;
+}
+
+.--light-talk__react-markdown hr {
+    height: 0.25em;
+    padding: 0;
+    margin: 24px 0;
+    background-color: #e1e4e8;
+    border: 0;
+}
+
+.--light-talk__tooltip {
+    background-color: $--light-talk-colors-gray-700;
+    color: $--light-talk-colors-white;
+    border-radius: 4px;
+    padding: 6px 16px;
+    font-size: 0.75rem;
+    line-height: 1.4;
+    font-weight: 400;
+    box-shadow: $--light-talk-shadows-md;
+    z-index: $--light-talk-zIndices-front;
+
+
+    &[data-popper-placement="bottom"] {
+        >.--light-talk__tooltip__arrow {
+            top: -4px;
+        }
+    }
+
+    &[data-popper-reference-hidden="false"] {
+        >.--light-talk__tooltip__arrow::before {
+            visibility: visible !important;
+        }
+    }
+
+    // Defined Arrow styles
+    &__arrow,
+    &__arrow::before {
+        position: absolute;
+        width: 8px;
+        height: 8px;
+        background: $--light-talk-colors-gray-700;
+        transition: top 0.3s ease-in, bottom 0.3s ease-in, left 0.3s ease-in,
+            right 0.3s ease-in;
+        z-index: $--light-talk-zIndices-front;
+    }
+
+    &__arrow {
+        visibility: hidden;
+    }
+
+    &__arrow::before {
+        visibility: hidden;
+        content: "";
+        transform: rotate(45deg);
+        box-shadow: 2px 4px 6px -1px rgba(0, 0, 0, 0.1);
+        z-index: $--light-talk-zIndices-front;
+    }
+}

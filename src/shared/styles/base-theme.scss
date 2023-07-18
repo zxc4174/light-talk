@@ -1,0 +1,430 @@
+    // Defined root em
+    $--light-talk-shadow-root-font-size: 16px;
+
+    $--light-talk-ring-inset: var(--light-talk-empty, );
+    $--light-talk-ring-offset-width: 0px;
+    $--light-talk-ring-offset-color: #fff;
+    $--light-talk-ring-color: rgba(66, 153, 225, 0.6);
+    $--light-talk-ring-offset-shadow: 0 0 #0000;
+    $--light-talk-ring-shadow: 0 0 #0000;
+    $--light-talk-space-x-reverse: 0;
+    $--light-talk-space-y-reverse: 0;
+    $--light-talk-colors-transparent: transparent;
+    $--light-talk-colors-current: currentColor;
+    $--light-talk-colors-black: #000000;
+    $--light-talk-colors-white: #FFFFFF;
+    $--light-talk-colors-whiteAlpha-50: rgba(255, 255, 255, 0.04);
+    $--light-talk-colors-whiteAlpha-100: rgba(255, 255, 255, 0.06);
+    $--light-talk-colors-whiteAlpha-200: rgba(255, 255, 255, 0.08);
+    $--light-talk-colors-whiteAlpha-300: rgba(255, 255, 255, 0.16);
+    $--light-talk-colors-whiteAlpha-400: rgba(255, 255, 255, 0.24);
+    $--light-talk-colors-whiteAlpha-500: rgba(255, 255, 255, 0.36);
+    $--light-talk-colors-whiteAlpha-600: rgba(255, 255, 255, 0.48);
+    $--light-talk-colors-whiteAlpha-700: rgba(255, 255, 255, 0.64);
+    $--light-talk-colors-whiteAlpha-800: rgba(255, 255, 255, 0.8);
+    $--light-talk-colors-whiteAlpha-900: rgba(255, 255, 255, 0.92);
+    $--light-talk-colors-blackAlpha-50: rgba(0, 0, 0, 0.04);
+    $--light-talk-colors-blackAlpha-100: rgba(0, 0, 0, 0.06);
+    $--light-talk-colors-blackAlpha-200: rgba(0, 0, 0, 0.08);
+    $--light-talk-colors-blackAlpha-300: rgba(0, 0, 0, 0.16);
+    $--light-talk-colors-blackAlpha-400: rgba(0, 0, 0, 0.24);
+    $--light-talk-colors-blackAlpha-500: rgba(0, 0, 0, 0.36);
+    $--light-talk-colors-blackAlpha-600: rgba(0, 0, 0, 0.48);
+    $--light-talk-colors-blackAlpha-700: rgba(0, 0, 0, 0.64);
+    $--light-talk-colors-blackAlpha-800: rgba(0, 0, 0, 0.8);
+    $--light-talk-colors-blackAlpha-900: rgba(0, 0, 0, 0.92);
+    $--light-talk-colors-gray-50: #F7FAFC;
+    $--light-talk-colors-gray-100: #EDF2F7;
+    $--light-talk-colors-gray-200: #E2E8F0;
+    $--light-talk-colors-gray-300: #CBD5E0;
+    $--light-talk-colors-gray-400: #A0AEC0;
+    $--light-talk-colors-gray-500: #718096;
+    $--light-talk-colors-gray-600: #4A5568;
+    $--light-talk-colors-gray-700: #2D3748;
+    $--light-talk-colors-gray-800: #1A202C;
+    $--light-talk-colors-gray-900: #171923;
+    $--light-talk-colors-red-50: #FFF5F5;
+    $--light-talk-colors-red-100: #FED7D7;
+    $--light-talk-colors-red-200: #FEB2B2;
+    $--light-talk-colors-red-300: #FC8181;
+    $--light-talk-colors-red-400: #F56565;
+    $--light-talk-colors-red-500: #E53E3E;
+    $--light-talk-colors-red-600: #C53030;
+    $--light-talk-colors-red-700: #9B2C2C;
+    $--light-talk-colors-red-800: #822727;
+    $--light-talk-colors-red-900: #63171B;
+    $--light-talk-colors-orange-50: #FFFAF0;
+    $--light-talk-colors-orange-100: #FEEBC8;
+    $--light-talk-colors-orange-200: #FBD38D;
+    $--light-talk-colors-orange-300: #F6AD55;
+    $--light-talk-colors-orange-400: #ED8936;
+    $--light-talk-colors-orange-500: #DD6B20;
+    $--light-talk-colors-orange-600: #C05621;
+    $--light-talk-colors-orange-700: #9C4221;
+    $--light-talk-colors-orange-800: #7B341E;
+    $--light-talk-colors-orange-900: #652B19;
+    $--light-talk-colors-yellow-50: #FFFFF0;
+    $--light-talk-colors-yellow-100: #FEFCBF;
+    $--light-talk-colors-yellow-200: #FAF089;
+    $--light-talk-colors-yellow-300: #F6E05E;
+    $--light-talk-colors-yellow-400: #ECC94B;
+    $--light-talk-colors-yellow-500: #D69E2E;
+    $--light-talk-colors-yellow-600: #B7791F;
+    $--light-talk-colors-yellow-700: #975A16;
+    $--light-talk-colors-yellow-800: #744210;
+    $--light-talk-colors-yellow-900: #5F370E;
+    $--light-talk-colors-green-50: #F0FFF4;
+    $--light-talk-colors-green-100: #C6F6D5;
+    $--light-talk-colors-green-200: #9AE6B4;
+    $--light-talk-colors-green-300: #68D391;
+    $--light-talk-colors-green-400: #48BB78;
+    $--light-talk-colors-green-500: #38A169;
+    $--light-talk-colors-green-600: #2F855A;
+    $--light-talk-colors-green-700: #276749;
+    $--light-talk-colors-green-800: #22543D;
+    $--light-talk-colors-green-900: #1C4532;
+    $--light-talk-colors-teal-50: #E6FFFA;
+    $--light-talk-colors-teal-100: #B2F5EA;
+    $--light-talk-colors-teal-200: #81E6D9;
+    $--light-talk-colors-teal-300: #4FD1C5;
+    $--light-talk-colors-teal-400: #38B2AC;
+    $--light-talk-colors-teal-500: #319795;
+    $--light-talk-colors-teal-600: #2C7A7B;
+    $--light-talk-colors-teal-700: #285E61;
+    $--light-talk-colors-teal-800: #234E52;
+    $--light-talk-colors-teal-900: #1D4044;
+    $--light-talk-colors-blue-50: #ebf8ff;
+    $--light-talk-colors-blue-100: #bee3f8;
+    $--light-talk-colors-blue-200: #90cdf4;
+    $--light-talk-colors-blue-300: #63b3ed;
+    $--light-talk-colors-blue-400: #4299e1;
+    $--light-talk-colors-blue-500: #3182ce;
+    $--light-talk-colors-blue-600: #2b6cb0;
+    $--light-talk-colors-blue-700: #2c5282;
+    $--light-talk-colors-blue-800: #2a4365;
+    $--light-talk-colors-blue-900: #1A365D;
+    $--light-talk-colors-cyan-50: #EDFDFD;
+    $--light-talk-colors-cyan-100: #C4F1F9;
+    $--light-talk-colors-cyan-200: #9DECF9;
+    $--light-talk-colors-cyan-300: #76E4F7;
+    $--light-talk-colors-cyan-400: #0BC5EA;
+    $--light-talk-colors-cyan-500: #00B5D8;
+    $--light-talk-colors-cyan-600: #00A3C4;
+    $--light-talk-colors-cyan-700: #0987A0;
+    $--light-talk-colors-cyan-800: #086F83;
+    $--light-talk-colors-cyan-900: #065666;
+    $--light-talk-colors-purple-50: #FAF5FF;
+    $--light-talk-colors-purple-100: #E9D8FD;
+    $--light-talk-colors-purple-200: #D6BCFA;
+    $--light-talk-colors-purple-300: #B794F4;
+    $--light-talk-colors-purple-400: #9F7AEA;
+    $--light-talk-colors-purple-500: #805AD5;
+    $--light-talk-colors-purple-600: #6B46C1;
+    $--light-talk-colors-purple-700: #553C9A;
+    $--light-talk-colors-purple-800: #44337A;
+    $--light-talk-colors-purple-900: #322659;
+    $--light-talk-colors-pink-50: #FFF5F7;
+    $--light-talk-colors-pink-100: #FED7E2;
+    $--light-talk-colors-pink-200: #FBB6CE;
+    $--light-talk-colors-pink-300: #F687B3;
+    $--light-talk-colors-pink-400: #ED64A6;
+    $--light-talk-colors-pink-500: #D53F8C;
+    $--light-talk-colors-pink-600: #B83280;
+    $--light-talk-colors-pink-700: #97266D;
+    $--light-talk-colors-pink-800: #702459;
+    $--light-talk-colors-pink-900: #521B41;
+    $--light-talk-colors-linkedin-50: #E8F4F9;
+    $--light-talk-colors-linkedin-100: #CFEDFB;
+    $--light-talk-colors-linkedin-200: #9BDAF3;
+    $--light-talk-colors-linkedin-300: #68C7EC;
+    $--light-talk-colors-linkedin-400: #34B3E4;
+    $--light-talk-colors-linkedin-500: #00A0DC;
+    $--light-talk-colors-linkedin-600: #008CC9;
+    $--light-talk-colors-linkedin-700: #0077B5;
+    $--light-talk-colors-linkedin-800: #005E93;
+    $--light-talk-colors-linkedin-900: #004471;
+    $--light-talk-colors-facebook-50: #E8F4F9;
+    $--light-talk-colors-facebook-100: #D9DEE9;
+    $--light-talk-colors-facebook-200: #B7C2DA;
+    $--light-talk-colors-facebook-300: #6482C0;
+    $--light-talk-colors-facebook-400: #4267B2;
+    $--light-talk-colors-facebook-500: #385898;
+    $--light-talk-colors-facebook-600: #314E89;
+    $--light-talk-colors-facebook-700: #29487D;
+    $--light-talk-colors-facebook-800: #223B67;
+    $--light-talk-colors-facebook-900: #1E355B;
+    $--light-talk-colors-messenger-50: #D0E6FF;
+    $--light-talk-colors-messenger-100: #B9DAFF;
+    $--light-talk-colors-messenger-200: #A2CDFF;
+    $--light-talk-colors-messenger-300: #7AB8FF;
+    $--light-talk-colors-messenger-400: #2E90FF;
+    $--light-talk-colors-messenger-500: #0078FF;
+    $--light-talk-colors-messenger-600: #0063D1;
+    $--light-talk-colors-messenger-700: #0052AC;
+    $--light-talk-colors-messenger-800: #003C7E;
+    $--light-talk-colors-messenger-900: #002C5C;
+    $--light-talk-colors-brand-100: #42ABA01f;
+    $--light-talk-colors-brand-200: #99E1D4;
+    $--light-talk-colors-brand-300: #80D4C0;
+    $--light-talk-colors-brand-400: #66C8AD;
+    $--light-talk-colors-brand-500: #42ABA0;
+    $--light-talk-colors-brand-600: #42ABA0; // Main color
+    $--light-talk-colors-brand-700: #367F77;
+    $--light-talk-colors-brand-800: #29535E;
+    $--light-talk-colors-brand-900: #24645D; // Dark color
+    $--light-talk-colors-borderColor: rgb(219, 220, 224);
+    $--light-talk-color-chat-conversation-background: rgba(246, 248, 250, 0.8);
+    $--light-talk-borders-none: 0;
+    $--light-talk-borders-1px: 1px solid;
+    $--light-talk-borders-2px: 2px solid;
+    $--light-talk-borders-4px: 4px solid;
+    $--light-talk-borders-8px: 8px solid;
+    $--light-talk-fonts-heading: -apple-system,
+        BlinkMacSystemFont,
+        "Segoe UI",
+        Helvetica,
+        Arial,
+        sans-serif,
+        "Apple Color Emoji",
+        "Segoe UI Emoji",
+        "Segoe UI Symbol";
+    $--light-talk-fonts-body: -apple-system,
+        BlinkMacSystemFont,
+        "Segoe UI",
+        Helvetica,
+        Arial,
+        sans-serif,
+        "Apple Color Emoji",
+        "Segoe UI Emoji",
+        "Segoe UI Symbol";
+    $--light-talk-fonts-mono: SFMono-Regular,
+        Menlo,
+        Monaco,
+        Consolas,
+        "Liberation Mono",
+        "Courier New",
+        monospace;
+    $--light-talk-fontSizes-3xs: calc(0.45 * $--light-talk-shadow-root-font-size);
+    $--light-talk-fontSizes-2xs: calc(0.625 * $--light-talk-shadow-root-font-size);
+    $--light-talk-fontSizes-xs: calc(0.75 * $--light-talk-shadow-root-font-size);
+    $--light-talk-fontSizes-sm: calc(0.875 * $--light-talk-shadow-root-font-size);
+    $--light-talk-fontSizes-md: calc(1 * $--light-talk-shadow-root-font-size);
+    $--light-talk-fontSizes-lg: calc(1.125 * $--light-talk-shadow-root-font-size);
+    $--light-talk-fontSizes-xl: calc(1.25 * $--light-talk-shadow-root-font-size);
+    $--light-talk-fontSizes-2xl: calc(1.5 * $--light-talk-shadow-root-font-size);
+    $--light-talk-fontSizes-3xl: calc(1.875 * $--light-talk-shadow-root-font-size);
+    $--light-talk-fontSizes-4xl: calc(2.25 * $--light-talk-shadow-root-font-size);
+    $--light-talk-fontSizes-5xl: calc(3 * $--light-talk-shadow-root-font-size);
+    $--light-talk-fontSizes-6xl: calc(3.75 * $--light-talk-shadow-root-font-size);
+    $--light-talk-fontSizes-7xl: calc(4.5 * $--light-talk-shadow-root-font-size);
+    $--light-talk-fontSizes-8xl: calc(6 * $--light-talk-shadow-root-font-size);
+    $--light-talk-fontSizes-9xl: calc(8 * $--light-talk-shadow-root-font-size);
+    $--light-talk-fontWeights-hairline: 100;
+    $--light-talk-fontWeights-thin: 200;
+    $--light-talk-fontWeights-light: 300;
+    $--light-talk-fontWeights-normal: 400;
+    $--light-talk-fontWeights-medium: 500;
+    $--light-talk-fontWeights-semibold: 600;
+    $--light-talk-fontWeights-bold: 700;
+    $--light-talk-fontWeights-extrabold: 800;
+    $--light-talk-fontWeights-black: 900;
+    $--light-talk-letterSpacings-tighter: -0.05em;
+    $--light-talk-letterSpacings-tight: -0.025em;
+    $--light-talk-letterSpacings-normal: 0;
+    $--light-talk-letterSpacings-wide: 0.025em;
+    $--light-talk-letterSpacings-wider: 0.05em;
+    $--light-talk-letterSpacings-widest: 0.1em;
+    $--light-talk-lineHeights-3: calc(0.75 * $--light-talk-shadow-root-font-size);
+    $--light-talk-lineHeights-4: calc(1 * $--light-talk-shadow-root-font-size);
+    $--light-talk-lineHeights-5: calc(1.25 * $--light-talk-shadow-root-font-size);
+    $--light-talk-lineHeights-6: calc(1.5 * $--light-talk-shadow-root-font-size);
+    $--light-talk-lineHeights-7: calc(1.75 * $--light-talk-shadow-root-font-size);
+    $--light-talk-lineHeights-8: calc(2 * $--light-talk-shadow-root-font-size);
+    $--light-talk-lineHeights-9: calc(2.25 * $--light-talk-shadow-root-font-size);
+    $--light-talk-lineHeights-10: calc(2.5 * $--light-talk-shadow-root-font-size);
+    $--light-talk-lineHeights-normal: normal;
+    $--light-talk-lineHeights-none: 1;
+    $--light-talk-lineHeights-shorter: 1.25;
+    $--light-talk-lineHeights-short: 1.375;
+    $--light-talk-lineHeights-base: 1.5;
+    $--light-talk-lineHeights-tall: 1.625;
+    $--light-talk-lineHeights-taller: 2;
+    $--light-talk-radii-none: 0;
+    $--light-talk-radii-sm: calc(0.125 * $--light-talk-shadow-root-font-size);
+    $--light-talk-radii-base: calc(0.25 * $--light-talk-shadow-root-font-size);
+    $--light-talk-radii-md: calc(0.375 * $--light-talk-shadow-root-font-size);
+    $--light-talk-radii-lg: calc(0.5 * $--light-talk-shadow-root-font-size);
+    $--light-talk-radii-xl: calc(0.75 * $--light-talk-shadow-root-font-size);
+    $--light-talk-radii-2xl: calc(1 * $--light-talk-shadow-root-font-size);
+    $--light-talk-radii-3xl: calc(1.5 * $--light-talk-shadow-root-font-size);
+    $--light-talk-radii-full: 9999px;
+    $--light-talk-space-1: calc(0.25 * $--light-talk-shadow-root-font-size);
+    $--light-talk-space-2: calc(0.5 * $--light-talk-shadow-root-font-size);
+    $--light-talk-space-3: calc(0.75 * $--light-talk-shadow-root-font-size);
+    $--light-talk-space-4: calc(1 * $--light-talk-shadow-root-font-size);
+    $--light-talk-space-5: calc(1.25 * $--light-talk-shadow-root-font-size);
+    $--light-talk-space-6: calc(1.5 * $--light-talk-shadow-root-font-size);
+    $--light-talk-space-7: calc(1.75 * $--light-talk-shadow-root-font-size);
+    $--light-talk-space-8: calc(2 * $--light-talk-shadow-root-font-size);
+    $--light-talk-space-9: calc(2.25 * $--light-talk-shadow-root-font-size);
+    $--light-talk-space-10: calc(2.5 * $--light-talk-shadow-root-font-size);
+    $--light-talk-space-12: calc(3 * $--light-talk-shadow-root-font-size);
+    $--light-talk-space-14: calc(3.5 * $--light-talk-shadow-root-font-size);
+    $--light-talk-space-16: calc(4 * $--light-talk-shadow-root-font-size);
+    $--light-talk-space-20: calc(5 * $--light-talk-shadow-root-font-size);
+    $--light-talk-space-24: calc(6 * $--light-talk-shadow-root-font-size);
+    $--light-talk-space-28: calc(7 * $--light-talk-shadow-root-font-size);
+    $--light-talk-space-32: calc(8 * $--light-talk-shadow-root-font-size);
+    $--light-talk-space-36: calc(9 * $--light-talk-shadow-root-font-size);
+    $--light-talk-space-40: calc(10 * $--light-talk-shadow-root-font-size);
+    $--light-talk-space-44: calc(11 * $--light-talk-shadow-root-font-size);
+    $--light-talk-space-48: calc(12 * $--light-talk-shadow-root-font-size);
+    $--light-talk-space-52: calc(13 * $--light-talk-shadow-root-font-size);
+    $--light-talk-space-56: calc(14 * $--light-talk-shadow-root-font-size);
+    $--light-talk-space-60: calc(15 * $--light-talk-shadow-root-font-size);
+    $--light-talk-space-64: calc(16 * $--light-talk-shadow-root-font-size);
+    $--light-talk-space-72: calc(18 * $--light-talk-shadow-root-font-size);
+    $--light-talk-space-80: calc(20 * $--light-talk-shadow-root-font-size);
+    $--light-talk-space-96: calc(24 * $--light-talk-shadow-root-font-size);
+    $--light-talk-space-px: 1px;
+    $--light-talk-space-0-5: calc(0.125 * $--light-talk-shadow-root-font-size);
+    $--light-talk-space-1-5: calc(0.375 * $--light-talk-shadow-root-font-size);
+    $--light-talk-space-2-5: calc(0.625 * $--light-talk-shadow-root-font-size);
+    $--light-talk-space-3-5: calc(0.875 * $--light-talk-shadow-root-font-size);
+    $--light-talk-shadows-xs: 0 0 0 1px rgba(0, 0, 0, 0.05);
+    $--light-talk-shadows-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+    $--light-talk-shadows-base: 0 1px 3px 0 rgba(0, 0, 0, 0.1),
+        0 1px 2px 0 rgba(0, 0, 0, 0.06);
+    $--light-talk-shadows-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1),
+        0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    $--light-talk-shadows-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1),
+        0 4px 6px -2px rgba(0, 0, 0, 0.05);
+    $--light-talk-shadows-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1),
+        0 10px 10px -5px rgba(0, 0, 0, 0.04);
+    $--light-talk-shadows-2xl: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+    $--light-talk-shadows-outline: 0 0 0 3px rgba(66, 153, 225, 0.6);
+    $--light-talk-shadows-inner: inset 0 2px 4px 0 rgba(0, 0, 0, 0.06);
+    $--light-talk-shadows-none: none;
+    $--light-talk-shadows-dark-lg: rgba(0, 0, 0, 0.1) 0px 0px 0px 1px,
+        rgba(0, 0, 0, 0.2) 0px 5px 10px,
+        rgba(0, 0, 0, 0.4) 0px 15px 40px;
+    $--light-talk-sizes-1: calc(0.25 * $--light-talk-shadow-root-font-size);
+    $--light-talk-sizes-2: calc(0.5 * $--light-talk-shadow-root-font-size);
+    $--light-talk-sizes-3: calc(0.75 * $--light-talk-shadow-root-font-size);
+    $--light-talk-sizes-4: calc(1 * $--light-talk-shadow-root-font-size);
+    $--light-talk-sizes-5: calc(1.25 * $--light-talk-shadow-root-font-size);
+    $--light-talk-sizes-6: calc(1.5 * $--light-talk-shadow-root-font-size);
+    $--light-talk-sizes-7: calc(1.75 * $--light-talk-shadow-root-font-size);
+    $--light-talk-sizes-8: calc(2 * $--light-talk-shadow-root-font-size);
+    $--light-talk-sizes-9: calc(2.25 * $--light-talk-shadow-root-font-size);
+    $--light-talk-sizes-10: calc(2.5 * $--light-talk-shadow-root-font-size);
+    $--light-talk-sizes-12: calc(3 * $--light-talk-shadow-root-font-size);
+    $--light-talk-sizes-14: calc(3.5 * $--light-talk-shadow-root-font-size);
+    $--light-talk-sizes-16: calc(4 * $--light-talk-shadow-root-font-size);
+    $--light-talk-sizes-20: calc(5 * $--light-talk-shadow-root-font-size);
+    $--light-talk-sizes-24: calc(6 * $--light-talk-shadow-root-font-size);
+    $--light-talk-sizes-28: calc(7 * $--light-talk-shadow-root-font-size);
+    $--light-talk-sizes-32: calc(8 * $--light-talk-shadow-root-font-size);
+    $--light-talk-sizes-36: calc(9 * $--light-talk-shadow-root-font-size);
+    $--light-talk-sizes-40: calc(10 * $--light-talk-shadow-root-font-size);
+    $--light-talk-sizes-44: calc(11 * $--light-talk-shadow-root-font-size);
+    $--light-talk-sizes-48: calc(12 * $--light-talk-shadow-root-font-size);
+    $--light-talk-sizes-52: calc(13 * $--light-talk-shadow-root-font-size);
+    $--light-talk-sizes-56: calc(14 * $--light-talk-shadow-root-font-size);
+    $--light-talk-sizes-60: calc(15 * $--light-talk-shadow-root-font-size);
+    $--light-talk-sizes-64: calc(16 * $--light-talk-shadow-root-font-size);
+    $--light-talk-sizes-72: calc(18 * $--light-talk-shadow-root-font-size);
+    $--light-talk-sizes-80: calc(20 * $--light-talk-shadow-root-font-size);
+    $--light-talk-sizes-96: calc(24 * $--light-talk-shadow-root-font-size);
+    $--light-talk-sizes-px: 1px;
+    $--light-talk-sizes-0-5: calc(0.125 * $--light-talk-shadow-root-font-size);
+    $--light-talk-sizes-1-5: calc(0.375 * $--light-talk-shadow-root-font-size);
+    $--light-talk-sizes-2-5: calc(0.625 * $--light-talk-shadow-root-font-size);
+    $--light-talk-sizes-3-5: calc(0.875 * $--light-talk-shadow-root-font-size);
+    $--light-talk-sizes-max: max-content;
+    $--light-talk-sizes-min: min-content;
+    $--light-talk-sizes-full: 100%;
+    $--light-talk-sizes-3xs: calc(14 * $--light-talk-shadow-root-font-size);
+    $--light-talk-sizes-2xs: calc(16 * $--light-talk-shadow-root-font-size);
+    $--light-talk-sizes-xs: calc(20 * $--light-talk-shadow-root-font-size);
+    $--light-talk-sizes-sm: calc(24 * $--light-talk-shadow-root-font-size);
+    $--light-talk-sizes-md: calc(28 * $--light-talk-shadow-root-font-size);
+    $--light-talk-sizes-lg: calc(32 * $--light-talk-shadow-root-font-size);
+    $--light-talk-sizes-xl: calc(36 * $--light-talk-shadow-root-font-size);
+    $--light-talk-sizes-2xl: calc(42 * $--light-talk-shadow-root-font-size);
+    $--light-talk-sizes-3xl: calc(48 * $--light-talk-shadow-root-font-size);
+    $--light-talk-sizes-4xl: calc(56 * $--light-talk-shadow-root-font-size);
+    $--light-talk-sizes-5xl: calc(64 * $--light-talk-shadow-root-font-size);
+    $--light-talk-sizes-6xl: calc(72 * $--light-talk-shadow-root-font-size);
+    $--light-talk-sizes-7xl: calc(80 * $--light-talk-shadow-root-font-size);
+    $--light-talk-sizes-8xl: calc(90 * $--light-talk-shadow-root-font-size);
+    $--light-talk-sizes-prose: 60ch;
+    $--light-talk-sizes-container-sm: 640px;
+    $--light-talk-sizes-container-md: 768px;
+    $--light-talk-sizes-container-lg: 1024px;
+    $--light-talk-sizes-container-xl: 1280px;
+    $--light-talk-zIndices-hide: -1;
+    $--light-talk-zIndices-auto: auto;
+    $--light-talk-zIndices-base: 0;
+    $--light-talk-zIndices-docked: 10;
+    $--light-talk-zIndices-dropdown: 1000;
+    $--light-talk-zIndices-sticky: 1100;
+    $--light-talk-zIndices-banner: 1200;
+    $--light-talk-zIndices-overlay: 1300;
+    $--light-talk-zIndices-modal: 1400;
+    $--light-talk-zIndices-popover: 1500;
+    $--light-talk-zIndices-skipLink: 1600;
+    $--light-talk-zIndices-toast: 1700;
+    $--light-talk-zIndices-tooltip: 1800;
+    $--light-talk-zIndices-front: 2147483647;
+    $--light-talk-transition-property-common: background-color,
+        border-color,
+        color,
+        fill,
+        stroke,
+        opacity,
+        box-shadow,
+        transform;
+    $--light-talk-transition-property-colors: background-color,
+        border-color,
+        color,
+        fill,
+        stroke;
+    $--light-talk-transition-property-dimensions: width,
+        height;
+    $--light-talk-transition-property-position: left,
+        right,
+        top,
+        bottom;
+    $--light-talk-transition-property-background: background-color,
+        background-image,
+        background-position;
+    $--light-talk-transition-property-common: background-color, border-color, color, fill, stroke, opacity, box-shadow, transform;
+    $--light-talk-transition-property-colors: background-color, border-color, color, fill, stroke;
+    $--light-talk-transition-property-dimensions: width, height;
+    $--light-talk-transition-property-position: left, right, top, bottom;
+    $--light-talk-transition-property-background: background-color, background-image, background-position;
+    $--light-talk-transition-easing-ease-in: cubic-bezier(0.4, 0, 1, 1);
+    $--light-talk-transition-easing-ease-out: cubic-bezier(0, 0, 0.2, 1);
+    $--light-talk-transition-easing-ease-in-out: cubic-bezier(0.4, 0, 0.2, 1);
+    $--light-talk-transition-duration-ultra-fast: 50ms;
+    $--light-talk-transition-duration-faster: 100ms;
+    $--light-talk-transition-duration-fast: 150ms;
+    $--light-talk-transition-duration-normal: 200ms;
+    $--light-talk-transition-duration-slow: 300ms;
+    $--light-talk-transition-duration-slower: 400ms;
+    $--light-talk-transition-duration-ultra-slow: 500ms;
+    $--light-talk-blur-none: 0;
+    $--light-talk-blur-sm: 4px;
+    $--light-talk-blur-base: 8px;
+    $--light-talk-blur-md: 12px;
+    $--light-talk-blur-lg: 16px;
+    $--light-talk-blur-xl: 24px;
+    $--light-talk-blur-2xl: 40px;
+    $--light-talk-blur-3xl: 64px;
+    $--light-talk-breakpoints-base: 0em;
+    $--light-talk-breakpoints-sm: 30em;
+    $--light-talk-breakpoints-md: 48em;
+    $--light-talk-breakpoints-lg: 62em;
+    $--light-talk-breakpoints-xl: 80em;
+    $--light-talk-breakpoints-2xl: 96em;
