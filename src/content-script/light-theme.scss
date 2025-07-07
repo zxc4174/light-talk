@@ -11,9 +11,7 @@
         "Segoe UI Emoji",
         "Segoe UI Symbol";
     border-color: $--light-talk-colors-borderColor;
-}
 
-* {
     &::-webkit-scrollbar {
         width: 10px;
         height: 10px;
@@ -43,6 +41,7 @@
         }
     }
 }
+
 
 // Define Spinner styles
 .--light-talk__spinner {
