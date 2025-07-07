@@ -1,5 +1,4 @@
-import { createParser } from 'eventsource-parser'
-import { isEmpty } from 'lodash-es'
+import { isEmpty } from './utils'
 import { streamAsyncIterable } from './stream-async-iterable'
 
 export async function fetchSSE(
@@ -12,13 +11,25 @@ export async function fetchSSE(
     const error = await resp.json().catch(() => ({}))
     throw new Error(!isEmpty(error) ? JSON.stringify(error) : `${resp.status} ${resp.statusText}`)
   }
-  const parser = createParser((event) => {
-    if (event.type === 'event') {
-      onMessage(event.data)
+
+  const reader = resp.body!.getReader()
+  const decoder = new TextDecoder()
+  let buffer = ''
+  while (true) {
+    const { done, value } = await reader.read()
+    if (done) break
+    buffer += decoder.decode(value, { stream: true })
+    const lines = buffer.split(/\r?\n/)
+    buffer = lines.pop() || ''
+    for (const line of lines) {
+      const trimmed = line.trim()
+      if (trimmed.startsWith('data:')) {
+        onMessage(trimmed.slice(5).trim())
+      }
     }
-  })
-  for await (const chunk of streamAsyncIterable(resp.body!)) {
-    const str = new TextDecoder().decode(chunk)
-    parser.feed(str)
+  }
+  const trimmed = buffer.trim()
+  if (trimmed.startsWith('data:')) {
+    onMessage(trimmed.slice(5).trim())
   }
 }

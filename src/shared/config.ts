@@ -1,4 +1,4 @@
-import { defaults } from 'lodash-es'
+import { defaults } from './utils'
 import Browser from 'webextension-polyfill'
 
 export enum QueryMode {
