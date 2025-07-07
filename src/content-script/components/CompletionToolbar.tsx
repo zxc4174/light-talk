@@ -91,7 +91,7 @@ const CompletionToolbar: React.FC<CompletionToolbarProps> = ({
                         className='--light-talk__popover__body__toolbar__stop-generating_button'
                         onClick={onClickStop}
                     >
-                        <StopIcon style={{ marginRight: 8 }} />Stop Generating
+                        <StopIcon className='--light-talk__stop-icon' />Stop Generating
                     </button> :
                     <div className='--light-talk__popover__body__toolbar__options'>
                         {

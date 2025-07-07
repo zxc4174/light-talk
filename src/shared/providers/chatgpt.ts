@@ -1,9 +1,11 @@
-import { v4 as uuidv4 } from 'uuid'
-import { GenerateAnswerParams, Provider } from '../types'
-import { fetchSSE } from '../fetch-sse'
+import { v4 as uuidv4 } from 'uuid';
+import { GenerateAnswerParams } from '../types';
+import { fetchSSE } from '../fetch-sse';
+import { BaseProvider } from './base';
+import { CHATGPT_API_BASE_URL } from '../constants';
 
 async function request(token: string, method: string, path: string, data?: unknown) {
-  return fetch(`https://chat.openai.com/backend-api${path}`, {
+  return fetch(`${CHATGPT_API_BASE_URL}${path}`, {
     method,
     headers: {
       'Content-Type': 'application/json',
@@ -21,17 +23,25 @@ export async function setConversationProperty(
   await request(token, 'PATCH', `/conversation/${conversationId}`, propertyObject)
 }
 
-export class ChatGPTProvider implements Provider {
+interface ConversationBody {
+  action: 'next';
+  messages: Array<{
+    id: string;
+    role: 'user';
+    content: { content_type: 'text'; parts: string[] };
+  }>;
+  model: string;
+  parent_message_id: string;
+  conversation_id?: string;
+}
+export class ChatGPTProvider extends BaseProvider {
   constructor(
-    private token: string,
-    private model: string,
+    token: string,
+    model: string,
     private conversationId: string | null,
     private parentMessageId: string | null,
   ) {
-    this.token = token
-    this.model = model
-    if (conversationId) this.conversationId = conversationId
-    if (parentMessageId) this.parentMessageId = parentMessageId
+    super(token, model);
   }
 
   async generateAnswer(params: GenerateAnswerParams) {
@@ -41,7 +51,7 @@ export class ChatGPTProvider implements Provider {
       }
     }
 
-    const body = {
+    const body: ConversationBody = {
       action: 'next',
       messages: [
         {
@@ -57,11 +67,10 @@ export class ChatGPTProvider implements Provider {
       parent_message_id: this.parentMessageId ?? uuidv4(),
     }
     if (this.conversationId) {
-      // @ts-ignore
-      body.conversation_id = this.conversationId
+      body.conversation_id = this.conversationId;
     }
 
-    await fetchSSE('https://chat.openai.com/backend-api/conversation', {
+    await fetchSSE(`${CHATGPT_API_BASE_URL}/conversation`, {
       method: 'POST',
       signal: params.signal,
       headers: {

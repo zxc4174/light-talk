@@ -5,7 +5,7 @@ import { Placement } from '@popperjs/core'
 interface TooltipProps {
     children: ReactElement
     title: string
-    deps?: any[]
+    deps?: React.DependencyList
 }
 
 const Tooltip: FC<TooltipProps> = ({ children, title, deps = [] }) => {

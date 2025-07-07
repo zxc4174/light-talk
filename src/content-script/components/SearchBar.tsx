@@ -71,8 +71,7 @@ export const SearchBar: React.FC<SearchBarProps> = ({
                                 onCompositionStart={handleOnStartComposition}
                                 onCompositionEnd={handleOnEndComposition}
                                 autoFocus
-                                className="--light-talk__input-group__textarea"
-                                style={{ maxHeight: '200px', overflowY: 'auto' }}
+                                className="--light-talk__input-group__textarea --light-talk__textarea"
                             />
                         </div>
                         <button

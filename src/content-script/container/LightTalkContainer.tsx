@@ -23,8 +23,8 @@ interface LightTalkContextProps {
     isVisible: boolean,
     queryMode: QueryMode,
     popoverSize: PopoverWidthSize,
-    handelOnChangeMode: () => void,
-    handelOnChangeSize: (value: string) => void,
+    handleOnChangeMode: () => void,
+    handleOnChangeSize: (value: string) => void,
     completions: Answer[],
     message: Answer,
     error: openAIError,
@@ -33,9 +33,9 @@ interface LightTalkContextProps {
     status: QueryStatus,
     question: string,
     setQuestion: React.Dispatch<React.SetStateAction<string>>
-    handelOnPostMessageToBackground: (question: string) => () => void,
+    handleOnPostMessageToBackground: (question: string) => () => void,
     handleOnInitializeApiStates: () => void,
-    handelOnStopGeneratingAnswer: () => void,
+    handleOnStopGeneratingAnswer: () => void,
 }
 
 interface LightTalkContainerProps {
@@ -106,7 +106,7 @@ const LightTalkContainer: React.FC<LightTalkContainerProps> = ({ children }) => 
             if (selectionText && selectionText.trim().length > 0) {
                 const q = selectionText.trim()
                 setQuestion(q)
-                handelOnPostMessageToBackground(`What is ${q}?`)
+                handleOnPostMessageToBackground(`What is ${q}?`)
 
                 const container = document.querySelector('#--light-talk-container')
                 if (container) {
@@ -128,11 +128,11 @@ const LightTalkContainer: React.FC<LightTalkContainerProps> = ({ children }) => 
         }
     }, [])
 
-    const handelOnChangeMode = () => {
+    const handleOnChangeMode = () => {
         setQueryMode('chat')
     }
 
-    const handelOnChangeSize = (value: string) => {
+    const handleOnChangeSize = (value: string) => {
         const size = popoverSize == 'lg' ? 'md' : 'lg'
         setPopoverSize(size)
     }
@@ -157,7 +157,7 @@ const LightTalkContainer: React.FC<LightTalkContainerProps> = ({ children }) => 
         }
     }, [completions])
 
-    const handelOnPostMessageToBackground = (q) => {
+    const handleOnPostMessageToBackground = (q: string) => {
         if (!q.length) return
 
         setIsLoading(true)
@@ -178,7 +178,7 @@ const LightTalkContainer: React.FC<LightTalkContainerProps> = ({ children }) => 
 
         let lastMessage = null
         portRef.current = Browser.runtime.connect()
-        const listener = (msg: any) => {
+        const listener = (msg: Answer | { error?: string; event?: string }) => {
             if (msg.content) {
                 setMessage(msg)
                 lastMessage = msg
@@ -237,7 +237,7 @@ const LightTalkContainer: React.FC<LightTalkContainerProps> = ({ children }) => 
         resetCacheData()
     }
 
-    const handelOnStopGeneratingAnswer = () => {
+    const handleOnStopGeneratingAnswer = () => {
         if (portRef.current) {
             portRef.current.disconnect()
             portRef.current = null
@@ -252,8 +252,8 @@ const LightTalkContainer: React.FC<LightTalkContainerProps> = ({ children }) => 
         isVisible,
         queryMode,
         popoverSize,
-        handelOnChangeMode,
-        handelOnChangeSize,
+        handleOnChangeMode,
+        handleOnChangeSize,
         completions,
         message,
         error,
@@ -262,9 +262,9 @@ const LightTalkContainer: React.FC<LightTalkContainerProps> = ({ children }) => 
         status,
         question,
         setQuestion,
-        handelOnPostMessageToBackground,
+        handleOnPostMessageToBackground,
         handleOnInitializeApiStates,
-        handelOnStopGeneratingAnswer,
+        handleOnStopGeneratingAnswer,
     }
 
     return (

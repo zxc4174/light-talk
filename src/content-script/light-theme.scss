@@ -1068,3 +1068,6 @@
         z-index: $--light-talk-zIndices-front;
     }
 }
+.--light-talk__stop-icon { margin-right: 8px; }
+.--light-talk__textarea { max-height: 200px; overflow-y: auto; }
+

@@ -30,8 +30,8 @@ const QueryPopover: React.FC<QueryPopoverProps> = ({ }) => {
         isVisible,
         queryMode,
         popoverSize,
-        handelOnChangeMode,
-        handelOnChangeSize,
+        handleOnChangeMode,
+        handleOnChangeSize,
         completions = [],
         message,
         error,
@@ -40,9 +40,9 @@ const QueryPopover: React.FC<QueryPopoverProps> = ({ }) => {
         status,
         question,
         setQuestion,
-        handelOnPostMessageToBackground,
+        handleOnPostMessageToBackground,
         handleOnInitializeApiStates,
-        handelOnStopGeneratingAnswer,
+        handleOnStopGeneratingAnswer,
     } = React.useContext(LightTalkContext)
 
     const [_windowHeight, windowWidth] = useWindowDimensions()
@@ -113,7 +113,7 @@ const QueryPopover: React.FC<QueryPopoverProps> = ({ }) => {
             updateCacheData({ lastQuestion: q })
         }
 
-        handelOnPostMessageToBackground(q)
+        handleOnPostMessageToBackground(q)
     }
 
     return (
@@ -176,7 +176,7 @@ const QueryPopover: React.FC<QueryPopoverProps> = ({ }) => {
                             }
                             <ExpandButton
                                 isExpand={isPopoverExpanded}
-                                onClick={handelOnChangeSize}
+                                onClick={handleOnChangeSize}
                             />
                             <Tooltip title="Close window">
                                 <button
@@ -215,7 +215,7 @@ const QueryPopover: React.FC<QueryPopoverProps> = ({ }) => {
                                             <ChatCompletion
                                                 completion={message}
                                                 status={status}
-                                                onClickStop={handelOnStopGeneratingAnswer}
+                                                onClickStop={handleOnStopGeneratingAnswer}
                                             />
                                         }
                                     </React.Fragment> :
@@ -225,14 +225,14 @@ const QueryPopover: React.FC<QueryPopoverProps> = ({ }) => {
                                                 <Completion
                                                     completion={message}
                                                     status={status}
-                                                    onClickStop={handelOnStopGeneratingAnswer}
+                                                    onClickStop={handleOnStopGeneratingAnswer}
                                                 /> :
                                                 <Completion
                                                     completion={
                                                         completions.findLast(c => c.role === 'assistant')
                                                     }
                                                     queryMode={queryMode}
-                                                    onClickChatButton={handelOnChangeMode}
+                                                    onClickChatButton={handleOnChangeMode}
                                                 />
                                         }
                                     </React.Fragment>

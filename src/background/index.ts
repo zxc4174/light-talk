@@ -84,9 +84,11 @@ Browser.runtime.onConnect.addListener((port) => {
         msg.conversationId,
         msg.parentMessageId
       )
-    } catch (err: any) {
+    } catch (err: unknown) {
       console.error(err)
-      port.postMessage({ error: err.message })
+      if (err instanceof Error) {
+        port.postMessage({ error: err.message })
+      }
     }
   })
 })
@@ -121,7 +123,7 @@ Browser.contextMenus.onClicked.addListener(async function (info, tab) {
         selectionText: info.selectionText.trim().toString(),
       })
     }
-  } catch (err: any) {
+  } catch (err: unknown) {
     console.error(err)
   }
 })

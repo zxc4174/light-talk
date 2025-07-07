@@ -61,7 +61,7 @@ const SettingPanel: FC = () => {
         }
     }, [])
 
-    const handelOnChangeUseMemory = () => {
+    const handleOnChangeUseMemory = () => {
         setUseMemory(prev => {
             if (prev) resetCacheData()
             updateUserConfig({ memory: !prev })
@@ -70,7 +70,7 @@ const SettingPanel: FC = () => {
         handleOnShowToast('Memory updated')
     }
 
-    const handelOnChangeVisibility = () => {
+    const handleOnChangeVisibility = () => {
         setVisibility((prev) => {
             updateUserConfig({ visibility: !prev })
             return !prev
@@ -78,7 +78,7 @@ const SettingPanel: FC = () => {
         handleOnShowToast('Visibility updated')
     }
 
-    const handelOnChangeApiProvider = (index: number) => {
+    const handleOnChangeApiProvider = (index: number) => {
         setApiProviderType(index)
         updateUserConfig({ apiProvider: index })
         if (index === apiProviderArr.findIndex((value) => value === apiProvider.ChatGPT)) {
@@ -159,7 +159,7 @@ const SettingPanel: FC = () => {
                         variant='enclosed'
                         colorScheme='brand'
                         index={apiProviderType}
-                        onChange={handelOnChangeApiProvider}
+                        onChange={handleOnChangeApiProvider}
 
                     >
                         <TabList>
@@ -230,7 +230,7 @@ const SettingPanel: FC = () => {
                                 size='lg'
                                 colorScheme='brand'
                                 isChecked={useMemory}
-                                onChange={handelOnChangeUseMemory}
+                                onChange={handleOnChangeUseMemory}
                             />
                         </Stack>
                     </Stack>
@@ -248,7 +248,7 @@ const SettingPanel: FC = () => {
                                 size='lg'
                                 colorScheme='brand'
                                 isChecked={visibility}
-                                onChange={handelOnChangeVisibility}
+                                onChange={handleOnChangeVisibility}
                             />
                         </Stack>
                     </Stack>

@@ -1,16 +1,16 @@
-import ExpiryMap from "expiry-map"
-import { getUserConfig } from "./config"
-import { OpenAIModel } from "./types"
+import ExpiryMap from "expiry-map";
+import { getUserConfig } from "./config";
+import { OpenAIModel, ChatGPTModel } from "./types";
+import { OPENAI_API_BASE_URL, CHATGPT_API_BASE_URL, CHATGPT_SESSION_URL } from "./constants";
 
 
 // OpenAI API
-const BASE_OPEN_AI_URL = "https://api.openai.com/v1"
 
 export const fetchOpenAIModels = async (): Promise<OpenAIModel[]> => {
-    const config = await getUserConfig()
-    if (!config.apiKey) return
+    const config = await getUserConfig();
+    if (!config.apiKey) return [];
 
-    const response = await fetch(`${BASE_OPEN_AI_URL}/models`, {
+    const response = await fetch(`${OPENAI_API_BASE_URL}/models`, {
         method: "GET",
         headers: {
             "Content-Type": "application/json",
@@ -28,15 +28,13 @@ export const fetchOpenAIModels = async (): Promise<OpenAIModel[]> => {
 
 // ChatGPT API
 
-const BASE_CHAT_GPT_URL = "https://chat.openai.com/backend-api"
-
-const cache = new ExpiryMap(10 * 1000)
+const cache = new ExpiryMap(10 * 1000);
 
 export const getChatGPTAccessToken = async (token: string): Promise<string> => {
     if (cache.get(token)) {
         return cache.get(token)
     }
-    const resp = await fetch('https://chat.openai.com/api/auth/session')
+    const resp = await fetch(CHATGPT_SESSION_URL)
     if (resp.status === 403) {
         throw new Error('CLOUDFLARE')
     }
@@ -48,11 +46,11 @@ export const getChatGPTAccessToken = async (token: string): Promise<string> => {
     return data.accessToken
 }
 
-export const fetchChatGPTModels = async (): Promise<any> => {
+export const fetchChatGPTModels = async (): Promise<ChatGPTModel[]> => {
     const config = await getUserConfig()
 
     const token = await getChatGPTAccessToken(config?.apiKey ?? 'ACCESS_TOKEN')
-    const response = await fetch(`${BASE_CHAT_GPT_URL}/models`, {
+    const response = await fetch(`${CHATGPT_API_BASE_URL}/models`, {
         method: "GET",
         headers: {
             "Content-Type": "application/json",
@@ -69,7 +67,7 @@ export const fetchChatGPTModels = async (): Promise<any> => {
 }
 
 export async function sendMessageFeedback(token: string, data: unknown) {
-    return fetch(`${BASE_CHAT_GPT_URL}/conversation/message_feedback`, {
+    return fetch(`${CHATGPT_API_BASE_URL}/conversation/message_feedback`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
