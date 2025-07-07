@@ -10,9 +10,7 @@
         "esModuleInterop": true,
         "resolveJsonModule": true,
         "moduleResolution": "node",
-        "types": [
-            "node"
-        ],
+        "types": [],
         "noFallthroughCasesInSwitch": true,
         "allowSyntheticDefaultImports": true,
         "lib": [

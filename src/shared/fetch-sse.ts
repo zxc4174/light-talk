@@ -1,5 +1,4 @@
 import { isEmpty } from './utils'
-import { streamAsyncIterable } from './stream-async-iterable'
 
 export async function fetchSSE(
   resource: string,
@@ -15,19 +14,23 @@ export async function fetchSSE(
   const reader = resp.body!.getReader()
   const decoder = new TextDecoder()
   let buffer = ''
+
   while (true) {
     const { done, value } = await reader.read()
     if (done) break
     buffer += decoder.decode(value, { stream: true })
-    const lines = buffer.split(/\r?\n/)
-    buffer = lines.pop() || ''
-    for (const line of lines) {
-      const trimmed = line.trim()
-      if (trimmed.startsWith('data:')) {
-        onMessage(trimmed.slice(5).trim())
+
+    let boundary = buffer.indexOf('\n\n')
+    while (boundary !== -1) {
+      const chunk = buffer.slice(0, boundary).trim()
+      buffer = buffer.slice(boundary + 2)
+      if (chunk.startsWith('data:')) {
+        onMessage(chunk.slice(5).trim())
       }
+      boundary = buffer.indexOf('\n\n')
     }
   }
+
   const trimmed = buffer.trim()
   if (trimmed.startsWith('data:')) {
     onMessage(trimmed.slice(5).trim())

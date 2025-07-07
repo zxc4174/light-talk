@@ -28,6 +28,7 @@ export class OpenAIProvider extends BaseProvider {
       signal: params.signal,
       headers: {
         'Content-Type': 'application/json',
+        Accept: 'text/event-stream',
         Authorization: `Bearer ${this.token}`,
         'OpenAI-Organization': this.organizationId,
       },
