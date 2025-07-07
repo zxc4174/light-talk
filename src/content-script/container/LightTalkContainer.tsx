@@ -176,14 +176,14 @@ const LightTalkContainer: React.FC<LightTalkContainerProps> = ({ children }) => 
         }
 
 
-        let lastMessage = null
+        let lastMessage: Answer | null = null
         portRef.current = Browser.runtime.connect()
         const listener = (msg: Answer | { error?: string; event?: string }) => {
-            if (msg.content) {
+            if ('content' in msg) {
                 setMessage(msg)
                 lastMessage = msg
                 setStatus('success')
-            } else if (msg.error) {
+            } else if ('error' in msg && msg.error) {
                 if (msg.error === "UNAUTHORIZED" || msg.error === "CLOUDFLARE") {
                     const _eStr = 'Access denied. To continue, please ensure your API key is valid or log in to ChatGPT.'
                     setError({ message: _eStr } as openAIError)
@@ -193,9 +193,8 @@ const LightTalkContainer: React.FC<LightTalkContainerProps> = ({ children }) => 
                 }
                 setIsLoading(false)
                 setStatus('error')
-
             }
-            else if (msg.event === 'DONE') {
+            else if ('event' in msg && msg.event === 'DONE') {
                 if (lastMessage) {
                     setCompletions((prev) => {
                         const newValue = [...prev, lastMessage]
