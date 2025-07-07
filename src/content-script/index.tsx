@@ -4,6 +4,8 @@ import { containerID, shadowRootID } from "../shared/constants"
 import App from "./App"
 
 import lightTheme from './light-theme.scss'
+import darkTheme from './dark-theme.scss'
+import { Theme, getUserConfig } from '../shared/config'
 
 export async function getContainer(): Promise<HTMLElement> {
     let $container: HTMLElement | null = document.getElementById(containerID)
@@ -12,7 +14,7 @@ export async function getContainer(): Promise<HTMLElement> {
         $container.id = containerID
 
         return new Promise((resolve, reject) => {
-            setTimeout(() => {
+            setTimeout(async () => {
                 const $container_: HTMLElement | null = document.getElementById(containerID)
                 if ($container_) {
                     resolve($container_)
@@ -24,7 +26,9 @@ export async function getContainer(): Promise<HTMLElement> {
                 }
                 const shadowRoot = $container.attachShadow({ mode: 'open' })
                 const $style = document.createElement('style')
-                $style.textContent = lightTheme
+                const config = await getUserConfig()
+                const useDark = config.theme === Theme.Dark || (config.theme === Theme.System && window.matchMedia('(prefers-color-scheme: dark)').matches)
+                $style.textContent = useDark ? darkTheme : lightTheme
                 const $inner = document.createElement('div')
                 shadowRoot.appendChild($style)
                 shadowRoot.appendChild($inner)

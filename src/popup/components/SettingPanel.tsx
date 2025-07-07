@@ -22,7 +22,7 @@ import {
 } from '@chakra-ui/react'
 
 import SettingIcon from '../../shared/icons/SettingIcon'
-import { QueryMode, apiProvider, getUserConfig, resetCacheData, updateUserConfig } from '../../shared/config'
+import { QueryMode, getUserConfig, resetCacheData, updateUserConfig } from '../../shared/config'
 
 import QueryModeRadioGroup from './QueryModeRadioGroup'
 import LanguageSelector from './LanguageSelector'
@@ -30,22 +30,17 @@ import OpenAIModelSelector from './OpenAIModelSelector'
 import SecretInput from './SecretInput'
 import PromptTextarea from './PromptTextarea'
 import SizeRadioGroup from './SizeRadioGroup'
-import ChatGPTModelSelector from './ChatGPTModelSelector'
 import ColorThemeSwitch from './ColorThemeSwitch'
 
 const SettingPanel: FC = () => {
     const toast = useToast()
     const [visibility, setVisibility] = useState<boolean>(true)
     const [useMemory, setUseMemory] = useState<boolean>(true)
-    const [apiProviderType, setApiProviderType] = useState<number>(0)
-
-    const apiProviderArr: string[] = Object.values(apiProvider)
 
     useEffect(() => {
         getUserConfig().then((config) => {
             setVisibility(config.visibility)
             setUseMemory(config.memory)
-            setApiProviderType(config.apiProvider)
         })
         const handleKeyDown = (e) => {
             if (e.key === 'Q' && e.shiftKey && e.ctrlKey) {
@@ -78,14 +73,6 @@ const SettingPanel: FC = () => {
         handleOnShowToast('Visibility updated')
     }
 
-    const handleOnChangeApiProvider = (index: number) => {
-        setApiProviderType(index)
-        updateUserConfig({ apiProvider: index })
-        if (index === apiProviderArr.findIndex((value) => value === apiProvider.ChatGPT)) {
-            updateUserConfig({ queryMode: QueryMode.Completion })
-        }
-        handleOnShowToast('API provider updated')
-    }
 
     const handleOnShowToast = (label: string) => {
         toast({
@@ -138,10 +125,7 @@ const SettingPanel: FC = () => {
                     <Stack spacing={1}>
                         <Heading size='sm'>Default Mode</Heading>
                         <Text fontSize={'sm'} color={'gray.500'}>Default mode for  LightTalk</Text>
-                        <QueryModeRadioGroup
-                            apiProviderType={apiProviderType}
-                            onUpdated={handleOnShowToast}
-                        />
+                        <QueryModeRadioGroup onUpdated={handleOnShowToast} />
                     </Stack>
                     <Stack spacing={1}>
                         <Heading size='sm'>Prompt</Heading>
@@ -154,64 +138,33 @@ const SettingPanel: FC = () => {
                         <LanguageSelector onUpdated={handleOnShowToast} />
                     </Stack>
                     {/* LLM Model Setting  */}
-                    <Tabs
-                        isFitted
-                        variant='enclosed'
-                        colorScheme='brand'
-                        index={apiProviderType}
-                        onChange={handleOnChangeApiProvider}
-
-                    >
-                        <TabList>
-                            <Tab>Use OpenAI API</Tab>
-                            <Tab>Use ChatGPT API</Tab>
-                        </TabList>
-                        <TabPanels>
-                            <TabPanel>
-                                <Stack spacing={4}>
-                                    <Stack spacing={1}>
-                                        <Heading size='sm'>API Key</Heading>
-                                        <Box>
-                                            <Text fontSize={'sm'} color={'gray.500'}>The key used for access OpenAI (required)</Text>
-                                            <Text fontSize={'sm'} color={'gray.500'}>
-                                                You can get the api key from{' '}
-                                                <Link color={'brand.600'} href='https://platform.openai.com/account/api-keys' target='_blank'>OpenAI</Link>
-                                            </Text>
-                                        </Box>
-                                        <SecretInput type='apiKey' onUpdated={handleOnShowToast} />
-                                    </Stack>
-                                    <Stack spacing={1}>
-                                        <Heading size='sm'>Organization ID</Heading>
-                                        <Box>
-                                            <Text fontSize={'sm'} color={'gray.500'}>OpenAI organization ID (optional)</Text>
-                                        </Box>
-                                        <SecretInput type='organizationId' onUpdated={handleOnShowToast} />
-                                    </Stack>
-                                    <Stack spacing={1}>
-                                        <Heading size='sm'>Model</Heading>
-                                        <Text fontSize={'sm'} color={'gray.500'}>The OpenAI chat LLM used for generating answer</Text>
-                                        <OpenAIModelSelector onUpdated={handleOnShowToast} />
-                                    </Stack>
-                                </Stack>
-                            </TabPanel>
-                            <TabPanel>
-                                <Stack spacing={4}>
-                                    <Text fontSize={'sm'} color={'gray.500'}>
-                                        To use the ChatGPT API, you need to remain logged in to{' '}
-                                        <Link color={'brand.600'} href='https://chat.openai.com/' target='_blank'>ChatGPT</Link>.
-                                        And only can use in Base mode.
-                                    </Text>
-                                    <Stack spacing={1}>
-                                        <Heading size='sm'>Model</Heading>
-                                        <Text fontSize={'sm'} color={'gray.500'}>The OpenAI chat LLM used for generating answer</Text>
-                                        <ChatGPTModelSelector onUpdated={handleOnShowToast} />
-                                    </Stack>
-                                </Stack>
-                            </TabPanel>
-                        </TabPanels>
-                    </Tabs>
+                    <Stack spacing={4}>
+                        <Stack spacing={1}>
+                            <Heading size='sm'>API Key</Heading>
+                            <Box>
+                                <Text fontSize={'sm'} color={'gray.500'}>The key used for access OpenAI (required)</Text>
+                                <Text fontSize={'sm'} color={'gray.500'}>
+                                    You can get the api key from{' '}
+                                    <Link color={'brand.600'} href='https://platform.openai.com/account/api-keys' target='_blank'>OpenAI</Link>
+                                </Text>
+                            </Box>
+                            <SecretInput type='apiKey' onUpdated={handleOnShowToast} />
+                        </Stack>
+                        <Stack spacing={1}>
+                            <Heading size='sm'>Organization ID</Heading>
+                            <Box>
+                                <Text fontSize={'sm'} color={'gray.500'}>OpenAI organization ID (optional)</Text>
+                            </Box>
+                            <SecretInput type='organizationId' onUpdated={handleOnShowToast} />
+                        </Stack>
+                        <Stack spacing={1}>
+                            <Heading size='sm'>Model</Heading>
+                            <Text fontSize={'sm'} color={'gray.500'}>The OpenAI chat LLM used for generating answer</Text>
+                            <OpenAIModelSelector onUpdated={handleOnShowToast} />
+                        </Stack>
+                    </Stack>
                     <Divider />
-                    {/* <Stack spacing={1}>
+                    <Stack spacing={1}>
                         <Heading size='sm'>Color Theme</Heading>
                         <Stack direction='row' justifyContent='space-between'>
                             <Text fontSize={'sm'} color={'gray.500'}>
@@ -219,7 +172,7 @@ const SettingPanel: FC = () => {
                             </Text>
                             <ColorThemeSwitch />
                         </Stack>
-                    </Stack> */}
+                    </Stack>
                     <Stack spacing={1}>
                         <Heading size='sm'>Memory</Heading>
                         <Stack direction='row' justifyContent='space-between'>

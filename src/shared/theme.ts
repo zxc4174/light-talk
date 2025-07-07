@@ -2,7 +2,8 @@ import { theme as origTheme, extendTheme } from "@chakra-ui/react"
 
 const customTheme = extendTheme({
     config: {
-        initialColorMode: 'light',
+        initialColorMode: 'system',
+        useSystemColorMode: true,
         prefix: 'light-talk'
     },
     styles: {

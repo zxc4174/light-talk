@@ -68,11 +68,10 @@ const ModeRadioButton: FC<ModeRadioButtonProps> = ({
 }
 
 interface DefaultModeRadioGroupProps {
-    apiProviderType: number
     onUpdated: (label: string) => void
 }
 
-const DefaultModeRadioGroup: FC<DefaultModeRadioGroupProps> = ({ apiProviderType, onUpdated }) => {
+const DefaultModeRadioGroup: FC<DefaultModeRadioGroupProps> = ({ onUpdated }) => {
     const [value, setValue] = useState<QueryMode>(QueryMode.Completion)
     const { getRootProps, getRadioProps } = useRadioGroup({
         name: 'mode',

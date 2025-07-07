@@ -1,9 +1,7 @@
 import Browser from "webextension-polyfill"
-import { Language, LanguageName, apiProvider, getUserConfig, updateUserConfig } from "../shared/config"
-import { ChatGPTProvider } from '../shared/providers/chatgpt'
+import { Language, LanguageName, getUserConfig, updateUserConfig } from "../shared/config"
 import { OpenAIProvider } from '../shared/providers/openai'
-import { Answer, Provider } from '../shared/types'
-import { getChatGPTAccessToken, sendMessageFeedback } from "../shared/api"
+import { Answer } from '../shared/types'
 
 
 
@@ -26,31 +24,16 @@ async function generateAnswers(
     }
   ]
 
-  let provider: Provider
-  const apiProviderArr: string[] = Object.values(apiProvider)
-  const isUseChatGPT = config.apiProvider === apiProviderArr.findIndex(
-    (value) => value === apiProvider.ChatGPT
+  const provider = new OpenAIProvider(
+    config.apiKey,
+    config.organizationId,
+    config.openAIModel,
+    [...prompts, ...completions],
+    config.maxTokens,
+    config.temperature,
+    config.topP
   )
-  let q = isUseChatGPT ? `${config.systemPrompt}. ${question}. ${language}` : question
-  if (isUseChatGPT) {
-    const token = await getChatGPTAccessToken(config.apiKey)
-    provider = new ChatGPTProvider(
-      token,
-      config.chatGPTModel,
-      conversationId,
-      parentMessageId
-    )
-  } else {
-    provider = new OpenAIProvider(
-      config.apiKey,
-      config.organizationId,
-      config.openAIModel,
-      [...prompts, ...completions],
-      config.maxTokens,
-      config.temperature,
-      config.topP
-    )
-  }
+  const q = question
 
   const controller = new AbortController()
 
@@ -93,15 +76,7 @@ Browser.runtime.onConnect.addListener((port) => {
   })
 })
 
-Browser.runtime.onMessage.addListener(async (message) => {
-  const config = await getUserConfig()
-  if (message.type === 'FEEDBACK') {
-    const token = await getChatGPTAccessToken(config.apiKey)
-    await sendMessageFeedback(token, message.data)
-  } else if (message.type === 'GET_ACCESS_TOKEN') {
-    return getChatGPTAccessToken(config.apiKey)
-  }
-})
+
 
 // Listener for contextMenus
 Browser.contextMenus.create(
@@ -130,17 +105,8 @@ Browser.contextMenus.onClicked.addListener(async function (info, tab) {
 
 Browser.tabs.onActivated.addListener(async (tab) => {
   if (tab.tabId) {
-    // Check API is available
-    getUserConfig()
-      .then((config) => {
-        if (config.apiKey.length < 1) {
-          getChatGPTAccessToken(config.apiKey ?? 'ACCESS_TOKEN').then((token) => {
-            updateUserConfig({ showWelcomeMessage: false })
-          }).catch((error) => {
-            updateUserConfig({ showWelcomeMessage: true })
-          })
-        }
-        updateUserConfig({ showWelcomeMessage: false })
-      })
+    getUserConfig().then((config) => {
+      updateUserConfig({ showWelcomeMessage: config.apiKey.length < 1 })
+    })
   }
 })

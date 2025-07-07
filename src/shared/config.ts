@@ -43,10 +43,6 @@ export const LanguageName: { key: Language, name: string }[] = [
   { key: Language.Portuguese, name: 'português' },
 ]
 
-export enum apiProvider {
-  OpenAI = 'openai',
-  ChatGPT = 'chatgpt',
-}
 
 export const OpenAIModelInfo = {
   'gpt-3.5-turbo': {
@@ -89,8 +85,6 @@ const userConfigWithDefaultValue = {
   language: Language.Auto,
   apiKey: '',
   organizationId: '',
-  apiProvider: 0,
-  chatGPTModel: 'text-davinci-002-render-sha',
   openAIModel: 'gpt-3.5-turbo',
   maxTokens: 256,
   temperature: 1,

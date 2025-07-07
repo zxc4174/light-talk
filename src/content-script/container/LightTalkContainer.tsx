@@ -185,7 +185,7 @@ const LightTalkContainer: React.FC<LightTalkContainerProps> = ({ children }) => 
                 setStatus('success')
             } else if ('error' in msg && msg.error) {
                 if (msg.error === "UNAUTHORIZED" || msg.error === "CLOUDFLARE") {
-                    const _eStr = 'Access denied. To continue, please ensure your API key is valid or log in to ChatGPT.'
+                    const _eStr = 'Access denied. Please ensure your API key is valid.'
                     setError({ message: _eStr } as openAIError)
                 } else {
                     const _e = JSON.parse(msg.error)
