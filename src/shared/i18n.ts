@@ -84,16 +84,25 @@ const zhTw = {
     sendMessage: '傳送訊息'
 } as const
 
+// reuse existing translations until custom translations are available
+const zh = zhTw
+const spanish = en
+const french = en
+const korean = en
+const ja = en
+const german = en
+const portuguese = en
+
 export const translations = {
   en,
-  zh: zhTw,
+  zh,
   'zh-tw': zhTw,
-  spanish: en,
-  french: en,
-  korean: en,
-  ja: en,
-  german: en,
-  portuguese: en
+  spanish,
+  french,
+  korean,
+  ja,
+  german,
+  portuguese
 } as const
 
 export type TranslationKey = keyof typeof translations.en
