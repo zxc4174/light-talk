@@ -1,8 +1,10 @@
-import { FC } from 'react'
-
+import { FC, useContext } from 'react'
 import LightTalkIcon from '../../shared/icons/LightTalkIcon'
+import { LightTalkContext } from '../container/LightTalkContainer'
+import { t } from '../../shared/i18n'
 
 const WelcomeMessage: FC = () => {
+    const { lang } = useContext(LightTalkContext)
     const handleOnClickOpenAI = () => {}
 
     return (
@@ -11,9 +13,8 @@ const WelcomeMessage: FC = () => {
                 <LightTalkIcon />
             </div>
             <div className="--light-talk__welcome-message__content">
-                <p className='--light-talk__welcome-message__content__title'>Hello!</p>
-                Before you begin, please ensure that your OpenAI API Key is set.
-                You can access the popup menu by clicking the icon in the extensions bar.
+                <p className='--light-talk__welcome-message__content__title'>{t('hello', lang)}</p>
+                {t('welcome', lang)}
             </div>
             <div className="--light-talk__welcome-message__action-container">
                 <a
@@ -21,7 +22,7 @@ const WelcomeMessage: FC = () => {
                     href='https://platform.openai.com/'
                     target='_blank'
                     onClick={handleOnClickOpenAI}
-                >Let’s get API Key</a>
+                >{t('getApiKey', lang)}</a>
             </div>
         </div >
     )

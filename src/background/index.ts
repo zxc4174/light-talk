@@ -13,14 +13,10 @@ async function generateAnswers(
   parentMessageId: string | null,
 ) {
   const config = await getUserConfig()
-  const language = config.language === Language.Auto ? '' :
-    `And always response in ${LanguageName.find(l => l.key === config.language).name} `
   const prompts = [
     {
       role: 'system',
-      content: config.systemPrompt.trim().length > 0 ?
-        `${config.systemPrompt}. ${language}` :
-        language
+      content: config.systemPrompt.trim(),
     }
   ]
 

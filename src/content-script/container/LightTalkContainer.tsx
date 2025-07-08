@@ -16,6 +16,7 @@ import {
     updateUserConfig
 } from '../../shared/config'
 import { containerID } from '../../shared/constants'
+import { translations, resolveLang } from '../../shared/i18n'
 
 interface LightTalkContextProps {
     showWelcomeMessage: boolean,
@@ -36,6 +37,7 @@ interface LightTalkContextProps {
     handleOnPostMessageToBackground: (question: string) => () => void,
     handleOnInitializeApiStates: () => void,
     handleOnStopGeneratingAnswer: () => void,
+    lang: keyof typeof translations,
 }
 
 interface LightTalkContainerProps {
@@ -51,6 +53,7 @@ const LightTalkContainer: React.FC<LightTalkContainerProps> = ({ children }) => 
     const [isVisible, setIsVisible] = React.useState<boolean>(false)
     const [queryMode, setQueryMode] = React.useState<QueryMode>('completion')
     const [popoverSize, setPopoverSize] = React.useState<PopoverWidthSize>('md')
+    const [lang, setLang] = React.useState<keyof typeof translations>('en')
 
     React.useEffect(() => {
         // Todo Color Mode
@@ -71,6 +74,10 @@ const LightTalkContainer: React.FC<LightTalkContainerProps> = ({ children }) => 
                 setIsVisible(config.visibility)
                 setQueryMode(config.queryMode)
                 setPopoverSize(config.popoverSize)
+                const uiLang = config.language === 'auto'
+                    ? resolveLang(navigator.language)
+                    : resolveLang(config.language)
+                setLang(uiLang)
             })
 
         const storageListener = (changes) => {
@@ -81,6 +88,7 @@ const LightTalkContainer: React.FC<LightTalkContainerProps> = ({ children }) => 
                 if (key === 'visibility') setIsVisible(change.newValue)
                 if (key === 'memory') setIsUseMemory(change.newValue)
                 if (key === 'popoverSize') setPopoverSize(change.newValue)
+                if (key === 'language') setLang(resolveLang(change.newValue === 'auto' ? navigator.language : change.newValue))
             }
         }
         Browser.storage.onChanged.addListener(storageListener)
@@ -265,6 +273,7 @@ const LightTalkContainer: React.FC<LightTalkContainerProps> = ({ children }) => 
         handleOnPostMessageToBackground,
         handleOnInitializeApiStates,
         handleOnStopGeneratingAnswer,
+        lang,
     }
 
     return (

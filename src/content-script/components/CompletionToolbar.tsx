@@ -4,6 +4,8 @@ import Browser from 'webextension-polyfill'
 import { Answer, QueryMode, QueryStatus } from '@src/shared/types'
 
 import ChatButton from './ChatButton'
+import { LightTalkContext } from '../container/LightTalkContainer'
+import { t } from '../../shared/i18n'
 
 import CopyIcon from '../../shared/icons/CopyIcon'
 import DislikeIcon from '../../shared/icons/DisLikeIcon'
@@ -29,6 +31,7 @@ const CompletionToolbar: React.FC<CompletionToolbarProps> = ({
     onClickChatButton,
     onClickStop,
 }) => {
+    const { lang } = React.useContext(LightTalkContext)
     const [liked, setLiked] = React.useState<boolean>(false)
     const [disliked, setDisliked] = React.useState<boolean>(false)
     const [likeStatus, setLikeStatus] = React.useState<actionStatus>('ready')
@@ -91,12 +94,12 @@ const CompletionToolbar: React.FC<CompletionToolbarProps> = ({
                         className='--light-talk__popover__body__toolbar__stop-generating_button'
                         onClick={onClickStop}
                     >
-                        <StopIcon className='--light-talk__stop-icon' />Stop Generating
+                        <StopIcon className='--light-talk__stop-icon' />{t('stopGenerating', lang)}
                     </button> :
                     <div className='--light-talk__popover__body__toolbar__options'>
                         {
                             !liked &&
-                            <Tooltip title={likeStatus === 'ready' ? 'Like' : 'Liked'}>
+                            <Tooltip title={likeStatus === 'ready' ? t('like', lang) : t('liked', lang)}>
                                 <button
                                     className='--light-talk__popover__body__toolbar__options__button'
                                     onClick={handleOnClickLikeButton}
@@ -111,7 +114,7 @@ const CompletionToolbar: React.FC<CompletionToolbarProps> = ({
                         }
                         {
                             !disliked &&
-                            <Tooltip title={dislikeStatus === 'ready' ? 'Dislike' : 'Disliked'}>
+                            <Tooltip title={dislikeStatus === 'ready' ? t('dislike', lang) : t('disliked', lang)}>
                                 <button
                                     className='--light-talk__popover__body__toolbar__options__button'
                                     onClick={handleOnClickDislikeButton}
@@ -124,7 +127,7 @@ const CompletionToolbar: React.FC<CompletionToolbarProps> = ({
                                 </button>
                             </Tooltip>
                         }
-                        <Tooltip title={copyStatus === 'ready' ? 'Copy' : 'Copied'}>
+                        <Tooltip title={copyStatus === 'ready' ? t('copy', lang) : t('copied', lang)}>
                             <button
                                 className='--light-talk__popover__body__toolbar__options__button'
                                 onClick={handleOnClickCopyButton}

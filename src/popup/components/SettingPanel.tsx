@@ -22,7 +22,8 @@ import {
 } from '@chakra-ui/react'
 
 import SettingIcon from '../../shared/icons/SettingIcon'
-import { QueryMode, getUserConfig, resetCacheData, updateUserConfig } from '../../shared/config'
+import { QueryMode, Language, getUserConfig, resetCacheData, updateUserConfig } from '../../shared/config'
+import { t, translations, resolveLang } from '../../shared/i18n'
 
 import QueryModeRadioGroup from './QueryModeRadioGroup'
 import LanguageSelector from './LanguageSelector'
@@ -36,11 +37,16 @@ const SettingPanel: FC = () => {
     const toast = useToast()
     const [visibility, setVisibility] = useState<boolean>(true)
     const [useMemory, setUseMemory] = useState<boolean>(true)
+    const [lang, setLang] = useState<keyof typeof translations>('en')
 
     useEffect(() => {
         getUserConfig().then((config) => {
             setVisibility(config.visibility)
             setUseMemory(config.memory)
+            const uiLang = config.language === Language.Auto
+                ? resolveLang(navigator.language)
+                : resolveLang(config.language)
+            setLang(uiLang)
         })
         const handleKeyDown = (e) => {
             if (e.key === 'Q' && e.shiftKey && e.ctrlKey) {
@@ -62,7 +68,7 @@ const SettingPanel: FC = () => {
             updateUserConfig({ memory: !prev })
             return !prev
         })
-        handleOnShowToast('Memory updated')
+        handleOnShowToast(t('memoryUpdated', lang))
     }
 
     const handleOnChangeVisibility = () => {
@@ -70,7 +76,7 @@ const SettingPanel: FC = () => {
             updateUserConfig({ visibility: !prev })
             return !prev
         })
-        handleOnShowToast('Visibility updated')
+        handleOnShowToast(t('visibilityUpdated', lang))
     }
 
 
@@ -117,32 +123,32 @@ const SettingPanel: FC = () => {
                     color={useColorModeValue('gray.700', 'white')}
                 >
                     <SettingIcon fill='currentColor' />
-                    <Heading size='md'>Settings</Heading>
+                    <Heading size='md'>{t('settings', lang)}</Heading>
                 </Flex>
             </CardHeader>
             <CardBody>
                 <Stack spacing={4}>
                     <Stack spacing={1}>
-                        <Heading size='sm'>Default Mode</Heading>
-                        <Text fontSize={'sm'} color={'gray.500'}>Default mode for  LightTalk</Text>
+                        <Heading size='sm'>{t('defaultMode', lang)}</Heading>
+                        <Text fontSize={'sm'} color={'gray.500'}>{t('defaultModeDesc', lang)}</Text>
                         <QueryModeRadioGroup onUpdated={handleOnShowToast} />
                     </Stack>
                     <Stack spacing={1}>
-                        <Heading size='sm'>Prompt</Heading>
-                        <Text fontSize={'sm'} color={'gray.500'}>Prompt for system</Text>
+                        <Heading size='sm'>{t('prompt', lang)}</Heading>
+                        <Text fontSize={'sm'} color={'gray.500'}>{t('promptDesc', lang)}</Text>
                         <PromptTextarea onUpdated={handleOnShowToast} />
                     </Stack>
                     <Stack spacing={1}>
-                        <Heading size='sm'>Language</Heading>
-                        <Text fontSize={'sm'} color={'gray.500'}>The language used in response</Text>
-                        <LanguageSelector onUpdated={handleOnShowToast} />
+                        <Heading size='sm'>{t('language', lang)}</Heading>
+                        <Text fontSize={'sm'} color={'gray.500'}>{t('languageDesc', lang)}</Text>
+                        <LanguageSelector onUpdated={handleOnShowToast} onChange={setLang} />
                     </Stack>
                     {/* LLM Model Setting  */}
                     <Stack spacing={4}>
                         <Stack spacing={1}>
-                            <Heading size='sm'>API Key</Heading>
+                            <Heading size='sm'>{t('apiKey', lang)}</Heading>
                             <Box>
-                                <Text fontSize={'sm'} color={'gray.500'}>The key used for access OpenAI (required)</Text>
+                                <Text fontSize={'sm'} color={'gray.500'}>{t('apiKeyDesc', lang)}</Text>
                                 <Text fontSize={'sm'} color={'gray.500'}>
                                     You can get the api key from{' '}
                                     <Link color={'brand.600'} href='https://platform.openai.com/account/api-keys' target='_blank'>OpenAI</Link>
@@ -151,33 +157,33 @@ const SettingPanel: FC = () => {
                             <SecretInput type='apiKey' onUpdated={handleOnShowToast} />
                         </Stack>
                         <Stack spacing={1}>
-                            <Heading size='sm'>Organization ID</Heading>
+                            <Heading size='sm'>{t('organizationId', lang)}</Heading>
                             <Box>
-                                <Text fontSize={'sm'} color={'gray.500'}>OpenAI organization ID (optional)</Text>
+                                <Text fontSize={'sm'} color={'gray.500'}>{t('organizationIdDesc', lang)}</Text>
                             </Box>
                             <SecretInput type='organizationId' onUpdated={handleOnShowToast} />
                         </Stack>
                         <Stack spacing={1}>
-                            <Heading size='sm'>Model</Heading>
-                            <Text fontSize={'sm'} color={'gray.500'}>The OpenAI chat LLM used for generating answer</Text>
+                            <Heading size='sm'>{t('model', lang)}</Heading>
+                            <Text fontSize={'sm'} color={'gray.500'}>{t('modelDesc', lang)}</Text>
                             <OpenAIModelSelector onUpdated={handleOnShowToast} />
                         </Stack>
                     </Stack>
                     <Divider />
                     <Stack spacing={1}>
-                        <Heading size='sm'>Color Theme</Heading>
+                        <Heading size='sm'>{t('colorTheme', lang)}</Heading>
                         <Stack direction='row' justifyContent='space-between'>
                             <Text fontSize={'sm'} color={'gray.500'}>
-                                Change the color theme of LightTalk
+                                {t('colorThemeDesc', lang)}
                             </Text>
                             <ColorThemeSwitch />
                         </Stack>
                     </Stack>
                     <Stack spacing={1}>
-                        <Heading size='sm'>Memory</Heading>
+                        <Heading size='sm'>{t('memory', lang)}</Heading>
                         <Stack direction='row' justifyContent='space-between'>
                             <Text fontSize={'sm'} color={'gray.500'}>
-                                Use the previous conversion, and it will start from the next conversion.
+                                {t('memoryDesc', lang)}
                             </Text>
                             <Switch
                                 size='lg'
@@ -188,10 +194,10 @@ const SettingPanel: FC = () => {
                         </Stack>
                     </Stack>
                     <Stack spacing={1}>
-                        <Heading size='sm'>Visibility</Heading>
+                        <Heading size='sm'>{t('visibility', lang)}</Heading>
                         <Stack direction='row' justifyContent='space-between'>
                             <Text fontSize={'sm'} color={'gray.500'}>
-                                LightTalk and allows users to toggle it using the shortcut ({
+                                {t('visibilityDesc', lang)} ({
                                     <span>
                                         <Kbd>control</Kbd> + <Kbd>shift</Kbd> + <Kbd>Q</Kbd>
                                     </span>
@@ -206,10 +212,10 @@ const SettingPanel: FC = () => {
                         </Stack>
                     </Stack>
                     <Stack spacing={1}>
-                        <Heading size='sm'>Size</Heading>
+                        <Heading size='sm'>{t('size', lang)}</Heading>
                         <Stack direction='row' justifyContent='space-between'>
                             <Text fontSize={'sm'} color={'gray.500'}>
-                                The default popover size
+                                {t('sizeDesc', lang)}
                             </Text>
                             <SizeRadioGroup onUpdated={handleOnShowToast} />
                         </Stack>

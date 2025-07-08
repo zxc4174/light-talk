@@ -14,6 +14,7 @@ import SearchBar from './SearchBar'
 import Completion from './Completion'
 import Alert from './Alert'
 import Tooltip from './Tooltip'
+import { t } from '../../shared/i18n'
 
 import CloseIcon from '../../shared/icons/CloseIcon'
 import LightTalkIcon from '../../shared/icons/LightTalkIcon'
@@ -43,6 +44,7 @@ const QueryPopover: React.FC<QueryPopoverProps> = ({ }) => {
         handleOnPostMessageToBackground,
         handleOnInitializeApiStates,
         handleOnStopGeneratingAnswer,
+        lang,
     } = React.useContext(LightTalkContext)
 
     const [_windowHeight, windowWidth] = useWindowDimensions()
@@ -146,7 +148,7 @@ const QueryPopover: React.FC<QueryPopoverProps> = ({ }) => {
                                         ChatGPT
                                     </p>
 
-                                    <Tooltip title="Open ChatGPT webapp">
+                                    <Tooltip title={t('openChatGPT', lang)}>
                                         <a
                                             className="--light-talk__popover__action-button"
                                             href='https://chat.openai.com/'
@@ -165,7 +167,7 @@ const QueryPopover: React.FC<QueryPopoverProps> = ({ }) => {
                             </div>
                             {
                                 (completions.length > 0 && status !== 'success') &&
-                                <Tooltip title="Clear completions">
+                                <Tooltip title={t('clearCompletions', lang)}>
                                     <button
                                         className="--light-talk__popover__action-button --light-talk__popover__action-button__clear"
                                         onClick={handleOnClear}
@@ -178,7 +180,7 @@ const QueryPopover: React.FC<QueryPopoverProps> = ({ }) => {
                                 isExpand={isPopoverExpanded}
                                 onClick={handleOnChangeSize}
                             />
-                            <Tooltip title="Close window">
+                            <Tooltip title={t('closeWindow', lang)}>
                                 <button
                                     className="--light-talk__popover__action-button --light-talk__popover__action-button__close"
                                     onClick={handleOnClosePopover}

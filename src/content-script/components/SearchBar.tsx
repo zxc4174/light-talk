@@ -1,6 +1,8 @@
 import React from 'react'
 import SendIcon from '../../shared/icons/SendIcon'
 import Spinner from './Spinner'
+import { LightTalkContext } from '../container/LightTalkContainer'
+import { t } from '../../shared/i18n'
 
 interface SearchBarProps {
     isLoading: boolean
@@ -16,7 +18,7 @@ interface SearchBarProps {
 export const SearchBar: React.FC<SearchBarProps> = ({
     isLoading = false,
     generatingStatus = undefined,
-    placeholder = 'Send Message',
+    placeholder,
     value,
     onChange,
     onClick,
@@ -25,6 +27,8 @@ export const SearchBar: React.FC<SearchBarProps> = ({
 }) => {
     const [textareaEl, setTextareaEl] = React.useState<HTMLTextAreaElement>(null)
     const [composition, setComposition] = React.useState<boolean>(false)
+    const { lang } = React.useContext(LightTalkContext)
+    const placeHolderText = placeholder ?? t('sendMessage', lang)
 
     const handleOnStartComposition = () => setComposition(true)
     const handleOnEndComposition = () => setComposition(false)
@@ -49,11 +53,11 @@ export const SearchBar: React.FC<SearchBarProps> = ({
     return (
         isLoading ?
             <div className="--light-talk__input-group__input_disabled">
-                <Spinner /> ChatGpt is thinking...
+                <Spinner /> {t('thinking', lang)}
             </div> :
             generatingStatus === 'success' ?
                 <div className="--light-talk__input-group__input_disabled">
-                    <Spinner /> ChatGpt is generating...
+                    <Spinner /> {t('generating', lang)}
                 </div> :
                 <div className="--light-talk__input-group">
                     <div className="--light-talk__input-group__container">
@@ -64,7 +68,7 @@ export const SearchBar: React.FC<SearchBarProps> = ({
                         <div className="--light-talk__input-group__input">
                             <textarea
                                 ref={setTextareaEl}
-                                placeholder={placeholder}
+                                placeholder={placeHolderText}
                                 value={value}
                                 onChange={onChange}
                                 onKeyDown={handleOnKeyDown}
