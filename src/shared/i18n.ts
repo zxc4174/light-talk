@@ -82,7 +82,6 @@ const zhTw = {
     clearCompletions: '清除紀錄',
     closeWindow: '關閉視窗',
     sendMessage: '傳送訊息'
-  }
 } as const
 
 export const translations = {
