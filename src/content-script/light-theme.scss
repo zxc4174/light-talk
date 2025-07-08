@@ -419,7 +419,7 @@
 
     // Defined Content styles
     &__content {
-        background-color: $--light-talk-color-chat-conversation-background;
+        background-color: $--light-talk-colors-white;
         width: $--light-talk-sizes-md;
         border-width: 1px;
         border-style: solid;
@@ -435,6 +435,10 @@
         box-shadow: $--light-talk-shadows-md;
         transition-property: $--light-talk-transition-property-common;
         transition-duration: $--light-talk-transition-duration-normal;
+    }
+
+    &__content--chat {
+        background-color: $--light-talk-color-chat-conversation-background;
     }
 
     // Defined header styles

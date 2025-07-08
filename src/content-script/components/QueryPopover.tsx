@@ -189,10 +189,8 @@ const QueryPopover: React.FC<QueryPopoverProps> = ({ }) => {
                         </header>
                         <div
                             ref={setCardBodyEl}
-                            className={question.length > 0 ? '--light-talk__popover__body' : ''}
+                            className={`${question.length > 0 ? '--light-talk__popover__body' : ''} ${queryMode === 'chat' ? '--light-talk__popover__content--chat' : ''}`}
                             style={{
-                                backgroundColor: queryMode === 'chat' ?
-                                    'rgba(246, 248, 250, 0.8)' : 'white',
                                 maxWidth: popoverWidth
                             }}
                         >
