@@ -86,7 +86,7 @@ const zhTw = {
 
 export const translations = {
   en,
-  zh: en,
+  zh: zhTw,
   'zh-tw': zhTw,
   spanish: en,
   french: en,
