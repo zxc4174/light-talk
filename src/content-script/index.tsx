@@ -3,7 +3,23 @@ import { containerID, shadowRootID } from "../shared/constants"
 
 import App from "./App"
 
+import baseTheme from '../shared/styles/base-theme.scss'
 import lightTheme from './light-theme.scss'
+import darkTheme from './dark-theme.scss'
+import { Theme, getUserConfig } from '../shared/config'
+import Browser from 'webextension-polyfill'
+
+let styleEl: HTMLStyleElement | null = null
+
+async function applyTheme(theme: Theme) {
+    if (!styleEl) {
+        const container = await getContainer()
+        styleEl = container.shadowRoot?.querySelector('style') as HTMLStyleElement | null
+    }
+    if (!styleEl) return
+    const useDark = theme === Theme.Dark || (theme === Theme.System && window.matchMedia('(prefers-color-scheme: dark)').matches)
+    styleEl.textContent = baseTheme + (useDark ? darkTheme : lightTheme)
+}
 
 export async function getContainer(): Promise<HTMLElement> {
     let $container: HTMLElement | null = document.getElementById(containerID)
@@ -12,7 +28,7 @@ export async function getContainer(): Promise<HTMLElement> {
         $container.id = containerID
 
         return new Promise((resolve, reject) => {
-            setTimeout(() => {
+            setTimeout(async () => {
                 const $container_: HTMLElement | null = document.getElementById(containerID)
                 if ($container_) {
                     resolve($container_)
@@ -24,7 +40,9 @@ export async function getContainer(): Promise<HTMLElement> {
                 }
                 const shadowRoot = $container.attachShadow({ mode: 'open' })
                 const $style = document.createElement('style')
-                $style.textContent = lightTheme
+                styleEl = $style
+                const config = await getUserConfig()
+                await applyTheme(config.theme)
                 const $inner = document.createElement('div')
                 shadowRoot.appendChild($style)
                 shadowRoot.appendChild($inner)
@@ -65,3 +83,10 @@ async function main() {
 }
 
 main()
+
+Browser.storage.onChanged.addListener(async (changes, area) => {
+    if (area === 'local' && changes.theme) {
+        const next: Theme = changes.theme.newValue
+        applyTheme(next)
+    }
+})

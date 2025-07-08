@@ -16,6 +16,7 @@ import {
     updateUserConfig
 } from '../../shared/config'
 import { containerID } from '../../shared/constants'
+import { translations, resolveLang } from '../../shared/i18n'
 
 interface LightTalkContextProps {
     showWelcomeMessage: boolean,
@@ -23,8 +24,8 @@ interface LightTalkContextProps {
     isVisible: boolean,
     queryMode: QueryMode,
     popoverSize: PopoverWidthSize,
-    handelOnChangeMode: () => void,
-    handelOnChangeSize: (value: string) => void,
+    handleOnChangeMode: () => void,
+    handleOnChangeSize: (value: string) => void,
     completions: Answer[],
     message: Answer,
     error: openAIError,
@@ -33,9 +34,10 @@ interface LightTalkContextProps {
     status: QueryStatus,
     question: string,
     setQuestion: React.Dispatch<React.SetStateAction<string>>
-    handelOnPostMessageToBackground: (question: string) => () => void,
+    handleOnPostMessageToBackground: (question: string) => () => void,
     handleOnInitializeApiStates: () => void,
-    handelOnStopGeneratingAnswer: () => void,
+    handleOnStopGeneratingAnswer: () => void,
+    lang: keyof typeof translations,
 }
 
 interface LightTalkContainerProps {
@@ -51,6 +53,7 @@ const LightTalkContainer: React.FC<LightTalkContainerProps> = ({ children }) => 
     const [isVisible, setIsVisible] = React.useState<boolean>(false)
     const [queryMode, setQueryMode] = React.useState<QueryMode>('completion')
     const [popoverSize, setPopoverSize] = React.useState<PopoverWidthSize>('md')
+    const [lang, setLang] = React.useState<keyof typeof translations>('en')
 
     React.useEffect(() => {
         // Todo Color Mode
@@ -71,15 +74,21 @@ const LightTalkContainer: React.FC<LightTalkContainerProps> = ({ children }) => 
                 setIsVisible(config.visibility)
                 setQueryMode(config.queryMode)
                 setPopoverSize(config.popoverSize)
+                const uiLang = config.language === 'auto'
+                    ? resolveLang(navigator.language)
+                    : resolveLang(config.language)
+                setLang(uiLang)
             })
 
         const storageListener = (changes) => {
-            for (let key in changes) {
+            for (const key in changes) {
                 const change = changes[key]
-                if (key === 'showWelcomeMessage') setShowWelcomeMessage(change.showWelcomeMessage)
+                if (key === 'showWelcomeMessage') setShowWelcomeMessage(change.newValue)
                 if (key === 'queryMode') setQueryMode(change.newValue)
                 if (key === 'visibility') setIsVisible(change.newValue)
-                if (key === 'memory') setIsUseMemory(change.memory)
+                if (key === 'memory') setIsUseMemory(change.newValue)
+                if (key === 'popoverSize') setPopoverSize(change.newValue)
+                if (key === 'language') setLang(resolveLang(change.newValue === 'auto' ? navigator.language : change.newValue))
             }
         }
         Browser.storage.onChanged.addListener(storageListener)
@@ -106,7 +115,7 @@ const LightTalkContainer: React.FC<LightTalkContainerProps> = ({ children }) => 
             if (selectionText && selectionText.trim().length > 0) {
                 const q = selectionText.trim()
                 setQuestion(q)
-                handelOnPostMessageToBackground(`What is ${q}?`)
+                handleOnPostMessageToBackground(`What is ${q}?`)
 
                 const container = document.querySelector('#--light-talk-container')
                 if (container) {
@@ -128,11 +137,11 @@ const LightTalkContainer: React.FC<LightTalkContainerProps> = ({ children }) => 
         }
     }, [])
 
-    const handelOnChangeMode = () => {
+    const handleOnChangeMode = () => {
         setQueryMode('chat')
     }
 
-    const handelOnChangeSize = (value: string) => {
+    const handleOnChangeSize = (value: string) => {
         const size = popoverSize == 'lg' ? 'md' : 'lg'
         setPopoverSize(size)
     }
@@ -157,7 +166,7 @@ const LightTalkContainer: React.FC<LightTalkContainerProps> = ({ children }) => 
         }
     }, [completions])
 
-    const handelOnPostMessageToBackground = (q) => {
+    const handleOnPostMessageToBackground = (q: string) => {
         if (!q.length) return
 
         setIsLoading(true)
@@ -176,16 +185,16 @@ const LightTalkContainer: React.FC<LightTalkContainerProps> = ({ children }) => 
         }
 
 
-        let lastMessage = null
+        let lastMessage: Answer | null = null
         portRef.current = Browser.runtime.connect()
-        const listener = (msg: any) => {
-            if (msg.content) {
+        const listener = (msg: Answer | { error?: string; event?: string }) => {
+            if ('content' in msg) {
                 setMessage(msg)
                 lastMessage = msg
                 setStatus('success')
-            } else if (msg.error) {
+            } else if ('error' in msg && msg.error) {
                 if (msg.error === "UNAUTHORIZED" || msg.error === "CLOUDFLARE") {
-                    const _eStr = 'Access denied. To continue, please ensure your API key is valid or log in to ChatGPT.'
+                    const _eStr = 'Access denied. Please ensure your API key is valid.'
                     setError({ message: _eStr } as openAIError)
                 } else {
                     const _e = JSON.parse(msg.error)
@@ -193,9 +202,8 @@ const LightTalkContainer: React.FC<LightTalkContainerProps> = ({ children }) => 
                 }
                 setIsLoading(false)
                 setStatus('error')
-
             }
-            else if (msg.event === 'DONE') {
+            else if ('event' in msg && msg.event === 'DONE') {
                 if (lastMessage) {
                     setCompletions((prev) => {
                         const newValue = [...prev, lastMessage]
@@ -237,7 +245,7 @@ const LightTalkContainer: React.FC<LightTalkContainerProps> = ({ children }) => 
         resetCacheData()
     }
 
-    const handelOnStopGeneratingAnswer = () => {
+    const handleOnStopGeneratingAnswer = () => {
         if (portRef.current) {
             portRef.current.disconnect()
             portRef.current = null
@@ -252,8 +260,8 @@ const LightTalkContainer: React.FC<LightTalkContainerProps> = ({ children }) => 
         isVisible,
         queryMode,
         popoverSize,
-        handelOnChangeMode,
-        handelOnChangeSize,
+        handleOnChangeMode,
+        handleOnChangeSize,
         completions,
         message,
         error,
@@ -262,9 +270,10 @@ const LightTalkContainer: React.FC<LightTalkContainerProps> = ({ children }) => 
         status,
         question,
         setQuestion,
-        handelOnPostMessageToBackground,
+        handleOnPostMessageToBackground,
         handleOnInitializeApiStates,
-        handelOnStopGeneratingAnswer,
+        handleOnStopGeneratingAnswer,
+        lang,
     }
 
     return (

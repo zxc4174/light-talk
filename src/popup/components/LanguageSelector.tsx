@@ -1,12 +1,14 @@
 ﻿import { ChangeEvent, FC, useEffect, useState } from 'react'
 import { Select } from '@chakra-ui/react'
 import { Language, LanguageName, getUserConfig, updateUserConfig } from '../../shared/config'
+import { t, resolveLang, translations } from '../../shared/i18n'
 
 interface LanguageSelectorProps {
     onUpdated: (label: string) => void
+    onChange?: (lang: keyof typeof translations) => void
 }
 
-const LanguageSelector: FC<LanguageSelectorProps> = ({ onUpdated }) => {
+const LanguageSelector: FC<LanguageSelectorProps> = ({ onUpdated, onChange }) => {
     const [value, setValue] = useState<Language>(Language.Auto)
 
     useEffect(() => {
@@ -16,9 +18,12 @@ const LanguageSelector: FC<LanguageSelectorProps> = ({ onUpdated }) => {
     }, [])
 
     const handleOnChange = (e: ChangeEvent<HTMLSelectElement>) => {
-        setValue(e.target.value as Language)
-        updateUserConfig({ language: e.target.value as Language })
-        onUpdated('Language updated')
+        const lang = e.target.value as Language
+        setValue(lang)
+        updateUserConfig({ language: lang })
+        const uiLang = resolveLang(lang === Language.Auto ? navigator.language : lang)
+        onUpdated(t('languageUpdated', uiLang))
+        onChange?.(uiLang)
     }
 
     return (
@@ -33,4 +38,6 @@ const LanguageSelector: FC<LanguageSelectorProps> = ({ onUpdated }) => {
     )
 }
 
+
 export default LanguageSelector
+

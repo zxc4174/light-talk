@@ -24,7 +24,7 @@ const SecretInput: FC<SecretInputProps> = ({
         setValue(e.target.value.trim())
     }
 
-    const handelOnBlur = () => {
+    const handleOnBlur = () => {
         updateUserConfig({ [type === 'apiKey' ? 'apiKey' : 'organizationId']: value })
         onUpdated(type === 'apiKey' ? 'Api Key updated' : 'organization ID updated')
     }
@@ -40,7 +40,7 @@ const SecretInput: FC<SecretInputProps> = ({
                 placeholder='Enter your key here'
                 value={value}
                 onChange={handleOnChange}
-                onBlur={handelOnBlur}
+                onBlur={handleOnBlur}
             />
             <InputRightElement>
                 <IconButton

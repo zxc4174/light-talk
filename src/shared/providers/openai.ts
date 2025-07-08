@@ -1,37 +1,34 @@
-import { fetchSSE } from '../fetch-sse'
-import { GenerateAnswerParams, Provider } from '../types'
+import { fetchSSE } from '../fetch-sse';
+import { GenerateAnswerParams } from '../types';
+import { BaseProvider } from './base';
+import { OPENAI_API_BASE_URL } from '../constants';
 
 interface Prompt {
   role: string
   content: string
 }
 
-export class OpenAIProvider implements Provider {
+export class OpenAIProvider extends BaseProvider {
   constructor(
-    private token: string,
-    private organizationId: string = undefined,
-    private model: string,
+    token: string,
+    private organizationId: string | undefined,
+    model: string,
     private prompts: Prompt[] = [],
     private maxTokens: number = 2048,
     private temperature: number = 1,
     private topP: number = 1,
   ) {
-    this.token = token
-    this.model = model
-    this.prompts = prompts
-    this.organizationId = organizationId
-    this.maxTokens = maxTokens
-    this.temperature = temperature
-    this.topP = topP
+    super(token, model);
   }
 
-  async generateAnswer(params: GenerateAnswerParams) {
+  async generateAnswer(params: GenerateAnswerParams): Promise<{ cleanup?: () => void }> {
     let result = ''
-    await fetchSSE('https://api.openai.com/v1/chat/completions', {
+    await fetchSSE(`${OPENAI_API_BASE_URL}/chat/completions`, {
       method: 'POST',
       signal: params.signal,
       headers: {
         'Content-Type': 'application/json',
+        Accept: 'text/event-stream',
         Authorization: `Bearer ${this.token}`,
         'OpenAI-Organization': this.organizationId,
       },

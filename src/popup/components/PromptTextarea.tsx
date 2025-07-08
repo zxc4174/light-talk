@@ -21,7 +21,7 @@ const PromptTextarea: FC<PromptTextareaProps> = ({
         setValue(e.target.value)
     }
 
-    const handelOnBlur = () => {
+    const handleOnBlur = () => {
         updateUserConfig({ systemPrompt: value })
         onUpdated('System Prompt updated')
     }
@@ -34,7 +34,7 @@ const PromptTextarea: FC<PromptTextareaProps> = ({
             borderRadius={'6px'}
             value={value}
             onChange={handleOnChange}
-            onBlur={handelOnBlur}
+            onBlur={handleOnBlur}
         />
     )
 }

@@ -14,6 +14,7 @@ import SearchBar from './SearchBar'
 import Completion from './Completion'
 import Alert from './Alert'
 import Tooltip from './Tooltip'
+import { t } from '../../shared/i18n'
 
 import CloseIcon from '../../shared/icons/CloseIcon'
 import LightTalkIcon from '../../shared/icons/LightTalkIcon'
@@ -30,8 +31,8 @@ const QueryPopover: React.FC<QueryPopoverProps> = ({ }) => {
         isVisible,
         queryMode,
         popoverSize,
-        handelOnChangeMode,
-        handelOnChangeSize,
+        handleOnChangeMode,
+        handleOnChangeSize,
         completions = [],
         message,
         error,
@@ -40,9 +41,10 @@ const QueryPopover: React.FC<QueryPopoverProps> = ({ }) => {
         status,
         question,
         setQuestion,
-        handelOnPostMessageToBackground,
+        handleOnPostMessageToBackground,
         handleOnInitializeApiStates,
-        handelOnStopGeneratingAnswer,
+        handleOnStopGeneratingAnswer,
+        lang,
     } = React.useContext(LightTalkContext)
 
     const [_windowHeight, windowWidth] = useWindowDimensions()
@@ -113,7 +115,7 @@ const QueryPopover: React.FC<QueryPopoverProps> = ({ }) => {
             updateCacheData({ lastQuestion: q })
         }
 
-        handelOnPostMessageToBackground(q)
+        handleOnPostMessageToBackground(q)
     }
 
     return (
@@ -146,7 +148,7 @@ const QueryPopover: React.FC<QueryPopoverProps> = ({ }) => {
                                         ChatGPT
                                     </p>
 
-                                    <Tooltip title="Open ChatGPT webapp">
+                                    <Tooltip title={t('openChatGPT', lang)}>
                                         <a
                                             className="--light-talk__popover__action-button"
                                             href='https://chat.openai.com/'
@@ -165,7 +167,7 @@ const QueryPopover: React.FC<QueryPopoverProps> = ({ }) => {
                             </div>
                             {
                                 (completions.length > 0 && status !== 'success') &&
-                                <Tooltip title="Clear completions">
+                                <Tooltip title={t('clearCompletions', lang)}>
                                     <button
                                         className="--light-talk__popover__action-button --light-talk__popover__action-button__clear"
                                         onClick={handleOnClear}
@@ -176,9 +178,9 @@ const QueryPopover: React.FC<QueryPopoverProps> = ({ }) => {
                             }
                             <ExpandButton
                                 isExpand={isPopoverExpanded}
-                                onClick={handelOnChangeSize}
+                                onClick={handleOnChangeSize}
                             />
-                            <Tooltip title="Close window">
+                            <Tooltip title={t('closeWindow', lang)}>
                                 <button
                                     className="--light-talk__popover__action-button --light-talk__popover__action-button__close"
                                     onClick={handleOnClosePopover}
@@ -189,10 +191,8 @@ const QueryPopover: React.FC<QueryPopoverProps> = ({ }) => {
                         </header>
                         <div
                             ref={setCardBodyEl}
-                            className={question.length > 0 ? '--light-talk__popover__body' : ''}
+                            className={`${question.length > 0 ? '--light-talk__popover__body' : ''} ${queryMode === 'chat' ? '--light-talk__popover__content--chat' : ''}`}
                             style={{
-                                backgroundColor: queryMode === 'chat' ?
-                                    'rgba(246, 248, 250, 0.8)' : 'white',
                                 maxWidth: popoverWidth
                             }}
                         >
@@ -215,7 +215,7 @@ const QueryPopover: React.FC<QueryPopoverProps> = ({ }) => {
                                             <ChatCompletion
                                                 completion={message}
                                                 status={status}
-                                                onClickStop={handelOnStopGeneratingAnswer}
+                                                onClickStop={handleOnStopGeneratingAnswer}
                                             />
                                         }
                                     </React.Fragment> :
@@ -225,14 +225,14 @@ const QueryPopover: React.FC<QueryPopoverProps> = ({ }) => {
                                                 <Completion
                                                     completion={message}
                                                     status={status}
-                                                    onClickStop={handelOnStopGeneratingAnswer}
+                                                    onClickStop={handleOnStopGeneratingAnswer}
                                                 /> :
                                                 <Completion
                                                     completion={
                                                         completions.findLast(c => c.role === 'assistant')
                                                     }
                                                     queryMode={queryMode}
-                                                    onClickChatButton={handelOnChangeMode}
+                                                    onClickChatButton={handleOnChangeMode}
                                                 />
                                         }
                                     </React.Fragment>

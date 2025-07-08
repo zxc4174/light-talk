@@ -20,21 +20,9 @@ export interface OpenAIModel {
     created: number
     parent: string
     owned_by: string
-    permission: any
+    permission: Record<string, unknown>[]
 }
 
-export interface ChatGPTModel {
-    slug: string
-    title: string
-    max_tokens: number
-    description: string
-    tags: string[]
-    qualitative_properties: {
-        reasoning: number[]
-        speed: number[]
-        conciseness: number[]
-    }
-}
 
 export interface openAIError {
     message: string,
