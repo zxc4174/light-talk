@@ -23,7 +23,7 @@ const LanguageSelector: FC<LanguageSelectorProps> = ({ onUpdated, onChange }) =>
         updateUserConfig({ language: lang })
         const uiLang = resolveLang(lang === Language.Auto ? navigator.language : lang)
         onUpdated(t('languageUpdated', uiLang))
-        onChange?.(uiLang as Language)
+        onChange?.(uiLang)
     }
 
     return (
