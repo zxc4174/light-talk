@@ -11,6 +11,16 @@ import Browser from 'webextension-polyfill'
 
 let styleEl: HTMLStyleElement | null = null
 
+async function applyTheme(theme: Theme) {
+    if (!styleEl) {
+        const container = await getContainer()
+        styleEl = container.shadowRoot?.querySelector('style') as HTMLStyleElement | null
+    }
+    if (!styleEl) return
+    const useDark = theme === Theme.Dark || (theme === Theme.System && window.matchMedia('(prefers-color-scheme: dark)').matches)
+    styleEl.textContent = baseTheme + (useDark ? darkTheme : lightTheme)
+}
+
 export async function getContainer(): Promise<HTMLElement> {
     let $container: HTMLElement | null = document.getElementById(containerID)
     if (!$container) {
@@ -30,10 +40,9 @@ export async function getContainer(): Promise<HTMLElement> {
                 }
                 const shadowRoot = $container.attachShadow({ mode: 'open' })
                 const $style = document.createElement('style')
-                const config = await getUserConfig()
-                const useDark = config.theme === Theme.Dark || (config.theme === Theme.System && window.matchMedia('(prefers-color-scheme: dark)').matches)
-                $style.textContent = baseTheme + (useDark ? darkTheme : lightTheme)
                 styleEl = $style
+                const config = await getUserConfig()
+                await applyTheme(config.theme)
                 const $inner = document.createElement('div')
                 shadowRoot.appendChild($style)
                 shadowRoot.appendChild($inner)
@@ -76,9 +85,8 @@ async function main() {
 main()
 
 Browser.storage.onChanged.addListener(async (changes, area) => {
-    if (area === 'local' && changes.theme && styleEl) {
+    if (area === 'local' && changes.theme) {
         const next: Theme = changes.theme.newValue
-        const useDark = next === Theme.Dark || (next === Theme.System && window.matchMedia('(prefers-color-scheme: dark)').matches)
-        styleEl.textContent = baseTheme + (useDark ? darkTheme : lightTheme)
+        applyTheme(next)
     }
 })
