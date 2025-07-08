@@ -3,9 +3,13 @@ import { containerID, shadowRootID } from "../shared/constants"
 
 import App from "./App"
 
+import baseTheme from '../shared/styles/base-theme.scss'
 import lightTheme from './light-theme.scss'
 import darkTheme from './dark-theme.scss'
 import { Theme, getUserConfig } from '../shared/config'
+import Browser from 'webextension-polyfill'
+
+let styleEl: HTMLStyleElement | null = null
 
 export async function getContainer(): Promise<HTMLElement> {
     let $container: HTMLElement | null = document.getElementById(containerID)
@@ -28,7 +32,8 @@ export async function getContainer(): Promise<HTMLElement> {
                 const $style = document.createElement('style')
                 const config = await getUserConfig()
                 const useDark = config.theme === Theme.Dark || (config.theme === Theme.System && window.matchMedia('(prefers-color-scheme: dark)').matches)
-                $style.textContent = useDark ? darkTheme : lightTheme
+                $style.textContent = baseTheme + (useDark ? darkTheme : lightTheme)
+                styleEl = $style
                 const $inner = document.createElement('div')
                 shadowRoot.appendChild($style)
                 shadowRoot.appendChild($inner)
@@ -69,3 +74,11 @@ async function main() {
 }
 
 main()
+
+Browser.storage.onChanged.addListener(async (changes, area) => {
+    if (area === 'local' && changes.theme && styleEl) {
+        const config = await getUserConfig()
+        const useDark = config.theme === Theme.Dark || (config.theme === Theme.System && window.matchMedia('(prefers-color-scheme: dark)').matches)
+        styleEl.textContent = baseTheme + (useDark ? darkTheme : lightTheme)
+    }
+})

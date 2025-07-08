@@ -21,7 +21,7 @@ export class OpenAIProvider extends BaseProvider {
     super(token, model);
   }
 
-  async generateAnswer(params: GenerateAnswerParams) {
+  async generateAnswer(params: GenerateAnswerParams): Promise<{ cleanup?: () => void }> {
     let result = ''
     await fetchSSE(`${OPENAI_API_BASE_URL}/chat/completions`, {
       method: 'POST',
