@@ -77,8 +77,8 @@ main()
 
 Browser.storage.onChanged.addListener(async (changes, area) => {
     if (area === 'local' && changes.theme && styleEl) {
-        const config = await getUserConfig()
-        const useDark = config.theme === Theme.Dark || (config.theme === Theme.System && window.matchMedia('(prefers-color-scheme: dark)').matches)
+        const next: Theme = changes.theme.newValue
+        const useDark = next === Theme.Dark || (next === Theme.System && window.matchMedia('(prefers-color-scheme: dark)').matches)
         styleEl.textContent = baseTheme + (useDark ? darkTheme : lightTheme)
     }
 })

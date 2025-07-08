@@ -74,12 +74,13 @@ const LightTalkContainer: React.FC<LightTalkContainerProps> = ({ children }) => 
             })
 
         const storageListener = (changes) => {
-            for (let key in changes) {
+            for (const key in changes) {
                 const change = changes[key]
-                if (key === 'showWelcomeMessage') setShowWelcomeMessage(change.showWelcomeMessage)
+                if (key === 'showWelcomeMessage') setShowWelcomeMessage(change.newValue)
                 if (key === 'queryMode') setQueryMode(change.newValue)
                 if (key === 'visibility') setIsVisible(change.newValue)
-                if (key === 'memory') setIsUseMemory(change.memory)
+                if (key === 'memory') setIsUseMemory(change.newValue)
+                if (key === 'popoverSize') setPopoverSize(change.newValue)
             }
         }
         Browser.storage.onChanged.addListener(storageListener)
