@@ -216,8 +216,8 @@
         display: flex;
         align-items: center;
         padding: calc(0.375 * $--light-talk-shadow-root-font-size) calc(0.75 * $--light-talk-shadow-root-font-size);
-        background-color: #f8f9fa;
-        border: 1px solid #ced4da;
+        background-color: $--light-talk-colors-white;
+        border: 1px solid $--light-talk-colors-borderColor;
     }
 
     &__addon-left {
@@ -738,8 +738,8 @@
         padding: 16px 32px;
         gap: 8px;
 
-        background: #F9FBFF;
-        border-bottom: 1px solid #E2E8F0;
+        background: $--light-talk-colors-gray-100;
+        border-bottom: 1px solid $--light-talk-colors-borderColor;
 
         /* Inside auto layout */
 
@@ -856,7 +856,7 @@
     font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Helvetica, Arial, sans-serif, Apple Color Emoji, Segoe UI Emoji;
     font-size: 16px;
     line-height: 1.5;
-    color: #24292e;
+    color: $--light-talk-colors-gray-700;
     word-wrap: break-word;
 }
 
@@ -894,7 +894,7 @@
 
 .--light-talk__react-markdown h6 {
     font-size: 0.85em;
-    color: #586069;
+    color: $--light-talk-colors-gray-500;
 }
 
 .--light-talk__react-markdown a {
@@ -919,7 +919,7 @@
     overflow: auto;
     font-size: 85%;
     line-height: 1.45;
-    background-color: #f6f8fa;
+    background-color: $--light-talk-colors-gray-100;
     border-radius: 3px;
 }
 
@@ -935,7 +935,7 @@
 
 /* Basic code syntax highlighting */
 .--light-talk__react-markdown pre code {
-    color: #24292e;
+    color: $--light-talk-colors-gray-700;
 }
 
 /* Comments */
@@ -982,7 +982,7 @@
 
 /* Punctuation */
 .--light-talk__react-markdown pre code span.hljs-punctuation {
-    color: #24292e;
+    color: $--light-talk-colors-gray-700;
 }
 
 .--light-talk__react-markdown blockquote {
@@ -1008,14 +1008,14 @@
 .--light-talk__react-markdown img {
     max-width: 100%;
     box-sizing: content-box;
-    background-color: #fff;
+    background-color: $--light-talk-colors-white;
 }
 
 .--light-talk__react-markdown hr {
     height: 0.25em;
     padding: 0;
     margin: 24px 0;
-    background-color: #e1e4e8;
+    background-color: $--light-talk-colors-gray-300;
     border: 0;
 }
 
