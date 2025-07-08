@@ -1,5 +1,4 @@
-export const translations = {
-  en: {
+const en = {
     settings: 'Settings',
     defaultMode: 'Default Mode',
     defaultModeDesc: 'Default mode for LightTalk',
@@ -40,8 +39,9 @@ export const translations = {
     clearCompletions: 'Clear completions',
     closeWindow: 'Close window',
     sendMessage: 'Send Message'
-  },
-  'zh-tw': {
+} as const
+
+const zhTw = {
     settings: '設定',
     defaultMode: '預設模式',
     defaultModeDesc: 'LightTalk 的預設模式',
@@ -85,11 +85,26 @@ export const translations = {
   }
 } as const
 
+export const translations = {
+  en,
+  zh: en,
+  'zh-tw': zhTw,
+  spanish: en,
+  french: en,
+  korean: en,
+  ja: en,
+  german: en,
+  portuguese: en
+} as const
+
 export type TranslationKey = keyof typeof translations.en
 
 export function resolveLang(lang: string): keyof typeof translations {
-  if (lang === 'zh' || lang.startsWith('zh')) return 'zh-tw'
-  return lang in translations ? (lang as keyof typeof translations) : 'en'
+  const lower = lang.toLowerCase()
+  if (lower.startsWith('zh')) {
+    return lower.includes('tw') ? 'zh-tw' : 'zh'
+  }
+  return lower in translations ? (lower as keyof typeof translations) : 'en'
 }
 
 export function t(key: TranslationKey, lang: keyof typeof translations): string {
